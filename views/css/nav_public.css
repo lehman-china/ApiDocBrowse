@@ -1,0 +1,47 @@
+/*
+ * Masthead for nav
+ */
+.none {
+    display: none;
+}
+.fl {
+    float: left;
+}
+
+.fr {
+    float: right;
+}
+.link {
+    color: #369;
+    cursor: pointer;
+}
+.line {
+    border-top: 1px dashed #CCCCCC;
+}
+
+
+/* Í·²¿*/
+.masthead {
+    background-color: #373942;
+    height: 64px;
+}
+.masthead .nav-item {
+    padding: 0 20px;
+    font-size: 14px;
+    background-color: #373942;
+    color: #e5e9ee;
+    position: relative;
+    line-height: 64px;
+}
+
+.masthead .nav-item:hover {
+    color: #fff;
+    background-color: #2b2d34;
+    text-decoration: none;
+}
+
+.masthead .nav-item.active {
+    color: #fff;
+    background-color: #2b2d34;
+    text-decoration: none;
+}

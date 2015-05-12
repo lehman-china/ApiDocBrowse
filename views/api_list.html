@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <% include common/template/public_head.html %>
+    <title>Web Api Doc</title>
+    <link rel="stylesheet" type="text/css" href="/css/api_list.css">
+    <script src="js/apiList.js" type="text/javascript"></script>
+</head>
+<body ng-controller="apiListCtrl">
+    <% include common/template/nav_head.html %>
+
+    <div class="container">
+
+        <ul class="breadcrumb" style="background-color: white;margin-top: 10px;margin-bottom: 10px;">
+            <li>
+                <a href="#">主页</a>
+            </li>
+            <li>
+                <a href="#">类目</a>
+            </li>
+            <li class="active">
+                主题
+            </li>
+        </ul>
+        <div class="line"></div>
+        <br>
+        <div class="row">
+
+            <div class="col-sm-2">
+
+                <ul class="nav-left">
+                    <li class="nav-header">
+                        返回 API说明文档
+                    </li>
+                    <li ng-class="{'active':form.curApiCatalog==api.name}" ng-repeat="api in apiCatalog" ng-click="changeApiCatalog( api )">
+                        <a href="#">{{api["name-zh"]}}</a><b></b>
+                    </li>
+                </ul>
+
+            </div><!-- /.main -->
+
+            <div class="col-sm-10">
+                <div >
+                    <b style="font-size: 16px;">用户API</b>
+                    <p style=" margin-top: 25px;margin-left: 25px;">
+                        提供了用户基本信息查询功能
+
+                    </p><div class="sub-wrap" data-spm="1998342952">
+                    <h3 class="head-title">API列表</h3>
+
+
+                    <div class="api-list">
+                        <p ng-repeat="api in apiList" ng-click="selApi(api,$index)">
+							<span class="l">
+								<a class="link" title="{{api}}">{{api}}</a>
+																																															</span>
+
+                            <span>{{api}}</span>
+                        </p>
+
+                    </div>
+                </div>
+
+                </div>
+
+            </div><!-- /.sidebar -->
+
+        </div><!-- /.row -->
+
+    </div><!-- /.container -->
+    <% include common/template/nav_bottom.html %>
+
+
+
+</body>
+</html>
