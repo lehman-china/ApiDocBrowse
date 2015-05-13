@@ -5,6 +5,6 @@
     <title></title>
 </head>
 <body>
-     Home Index {{username}}
+     Home Index
 </body>
 </html>

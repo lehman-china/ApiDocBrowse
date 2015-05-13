@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-    % include('common/public_head.html', title='Page Title')
+    % include('layout/public_head.html', title='Page Title')
 
     <title>API详情</title>
     <link rel="stylesheet" type="text/css" href="/include/css/api.css">
-    <script src="include/js/api.js" type="text/javascript"></script>
+    <script src="../include/js/api.js" type="text/javascript"></script>
 </head>
 <body ng-controller="apiCtrl">
-    % include('common/nav_head.html', title='Page Title')
+    % include('layout/nav_head.html', title='Page Title')
     <div class="container">
 
         <ul class="breadcrumb" style="background-color: white;margin-top: 10px;margin-bottom: 10px;">
@@ -129,7 +129,7 @@
         </div><!-- /.row -->
 
     </div><!-- /.container -->
-    % include('common/template/nav_bottom.html', title='Page Title')
+    % include('layout/template/nav_bottom.html', title='Page Title')
 
 </body>
 </html>

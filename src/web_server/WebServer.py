@@ -1,26 +1,15 @@
-import os
-import sys
-from bottle import *
 proPath =  "D:/Users/Desktop/Project/python/ApiDocBrowse"
+staticPath =  "D:/Users/Desktop/Project/python/ApiDocBrowse/views/include/"
+templatePath =  "D:/Users/Desktop/Project/python/ApiDocBrowse/views/templatePath/"
+
+import os
+
+from bottle import debug, run
+
+from src import app
 
 
-
-
-@route('/include/<filename:path>')
-def send_static(filename):
-    print(filename)
-    return static_file(filename, root=proPath+'/views/include/')
-
-
-# @route('/<filename:path>')
-# def send_static(filename):
-#     return static_file(filename, root=proPath+'/views/include/')
-
-
-@route('/hello/:name')
-def hello(name):
-    return template(proPath + '/views/api.html', username=name)
-
-
-
-run(host='localhost', port=5000, debug=True)
+debug(True)
+if __name__ == '__main__':
+    port = int(os.environ.get("PORT", 5000))
+    run(app, reloader=True, host='127.0.0.1', port=port)
