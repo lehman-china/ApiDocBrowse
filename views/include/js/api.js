@@ -43,20 +43,11 @@ require( [ "layer", "angular", "commonUtil", "bootstrap" ], function ( layer ) {
         };
 
         $( function () {
-            var apiCatalog = Util.request.getParameter( "api_catalog" );
-            var api_inx = Util.request.getParameter( "api_inx" );
-
-
-            $scope.selApi( $scope.api_inx );
-
-
             Util.ajax( {
-                    url: "/api-list.ajax",
-                    data:{ "api_catalog":$scope.apiCatalog },
+                    url: "/testApi.ajax",
+                    dataType:"text",
                     success: function ( res ) {
-                        var funcNameReg = /public\s*?[\d\D]*?\s*?([\d\D]*?)\(.*?/g;
-                        $scope.apiList = res.match( funcNameReg ) ;
-                        $scope.$apply();
+                        $( ".title-intro").html(res);
                     }
                 }
             );
@@ -85,39 +76,7 @@ require( [ "layer", "angular", "commonUtil", "bootstrap" ], function ( layer ) {
     angular.bootstrap( document.getElementsByTagName( "body" ), [ 'api' ] );
 
 
-    //*********************************jquery
-    $( function () {
-        var user = {
-            className: {
-                type: "String",
-                note: "这个是类的名称"
-            },
-            toString: {
-                type: "String",
-                note: "这个String 形式输出"
-            },
-            length: {
-                type: "Number",
-                note: "属性的个数"
-            },
-            childs: {
-                type: "Array",
-                note: "一群孩子"
-            },
-            isLogin: {
-                type: "Boolean",
-                note: "是否登陆"
-            },
-            child: {
-                type: "Object",
-                note: "一个孩子",
-                className: "com.lehman.Storage"
-            }
-        };
-        var html = JsonUtil.convertToString( user );
-        $( ".show" ).html( html );
 
-    } )
 
 } );
 

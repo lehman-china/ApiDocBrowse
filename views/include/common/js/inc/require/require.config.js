@@ -1,6 +1,6 @@
 
-// Ä¬ÈÏÇé¿öÏÂÄ£¿éËùÔÚÄ¿Â¼ÎªÆðÊ¼Ä¿Â¼
-var baseUrl = '/common/js/';
+// Ä¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¿Â¼Îªï¿½ï¿½Ê¼Ä¿Â¼
+var baseUrl = '/include/common/js/';
 require.config( {
 
     shim: {
@@ -29,17 +29,17 @@ require.config( {
         "angular": baseUrl + "framework/angular/angular.min",
         "angular-sanitize": baseUrl + "framework/angular/angular-sanitize.min",
         "avalon": baseUrl + "framework/avalon/avalon",
-        "ngmodel.format": baseUrl + "framework/angular/ngmodel.format", // angular °ó¶¨¸ñÊ½»¯
-        "jvalidator": baseUrl + "inc/jvalidator",// jq ±íµ¥ÑéÖ¤
+        "ngmodel.format": baseUrl + "framework/angular/ngmodel.format", // angular ï¿½ó¶¨¸ï¿½Ê½ï¿½ï¿½
+        "jvalidator": baseUrl + "inc/jvalidator",// jq ï¿½ï¿½ï¿½ï¿½Ö¤
         "jquery": baseUrl + "inc/jquery",
         "bootstrap": baseUrl + "framework/bootstrap/js/bootstrap.min",
         "commonUtil": baseUrl + "util/commonUtil",
-        "layer": baseUrl + "framework/layer/mobile/layer.m.dev" // mobileµ¯³ö²ã
+        "layer": baseUrl + "framework/layer/mobile/layer.m.dev" // mobileï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     },
     map: {
         '*': {
             'css':  baseUrl+'inc/require/require-css/css.js' // or whatever the path to require-css is
         }
     },
-    urlArgs: "bust=" + (new Date()).getTime()  //TODO ·ÀÖ¹¶ÁÈ¡»º´æ£¬µ÷ÊÔ½×¶ÎÊ¹ÓÃ
+    urlArgs: "bust=" + (new Date()).getTime()  //TODO ï¿½ï¿½Ö¹ï¿½ï¿½È¡ï¿½ï¿½ï¿½æ£¬ï¿½ï¿½ï¿½Ô½×¶ï¿½Ê¹ï¿½ï¿½
 } );

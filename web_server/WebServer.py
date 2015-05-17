@@ -4,7 +4,7 @@ templatePath =  "D:/Users/Desktop/Project/python/ApiDocBrowse/views/templatePath
 
 import os
 
-from bottle import debug, run
+from lib.bottle import debug, run
 
 from src import app
 
