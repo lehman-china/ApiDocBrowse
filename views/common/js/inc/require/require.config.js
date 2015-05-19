@@ -1,6 +1,6 @@
 
 // Ĭ�������ģ������Ŀ¼Ϊ��ʼĿ¼
-var baseUrl = '/include/common/js/';
+var baseUrl = '/static/common/js/';
 require.config( {
 
     shim: {

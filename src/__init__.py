@@ -6,6 +6,6 @@ app = Bottle()
 
 curPath = os.path.dirname(__file__)
 
-TEMPLATE_PATH.append( curPath+"/../views/template/")
+TEMPLATE_PATH.append( curPath+"/../views/")
 TEMPLATE_PATH.remove("./views/")
 from src.api_doc.controller import *
