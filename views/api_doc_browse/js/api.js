@@ -1,116 +1,215 @@
 require( [ "layer", "angular", "commonUtil", "bootstrap" ], function ( layer ) {
 
+
     var app = angular.module( 'api', [] );
+    // 字符串html 输出
+    app.directive( 'ngHtml', function () {
+        return function ( scope, el, attr ) {
+            if ( attr.ngHtml ) {
+                scope.$watch( attr.ngHtml, function ( html ) {
+                    html = (html || '无说明').replace( /\n/g, "<br/>" ).replace( /\s/g, "&nbsp;" )
+                    el.html( html );//更新html内容
+                } );
+            }
+        };
+    } );
+
+    // api文档说明对象的 html美化输出.
+    app.directive( 'ngApiDocHtml', function () {
+        return function ( scope, el, attr ) {
+            attr.ngApiDocHtml && scope.$watch( attr.ngApiDocHtml, function ( obj ) {
+                var html = Util.JsonUtilApiDoc.convertToString( obj );
+                el.html( html );//更新html内容
+            } );
+        };
+    } );
+    // api测试结果 html美化输出.
+    app.directive( 'ngTestResHtml', function () {
+        return function ( scope, el, attr ) {
+            attr.ngTestResHtml && scope.$watch( attr.ngTestResHtml, function ( obj ) {
+                var html = Util.JsonUtil.convertToString( obj );
+                el.html( html );//更新html内容
+            } );
+        };
+    } );
 
     app.controller( "apiCtrl", function ( $scope, $interval ) {
-        $scope.apiList = null;
-        $scope.apiCatalog = Util.request.getParameter( "api_catalog" );
-        $scope.api_inx = Util.request.getParameter( "api_inx" );
+        $scope.view = g_view;
+        $scope.form = {}; // 一些提交的数据分类
 
-        $scope.view = {
-            apiTest : {
-                url:"http://www.baidu.com",
-                typeList: ["GET","POST","PUT"],
-                type: "GET",
-                contentTypeList: ["text/plain","application/json"],
-                contentType: "text/plain",
-                param:{
-                    phone:"13266720440"
+        $scope.domain = "http://192.168.1.100:8080";
 
+
+        $scope.view.curApi = null;
+
+
+        // 请求头的展示,与数据同步
+        $scope.getRequestHeaders = function () {
+            var requestHeaders = {
+                'Content-Type': $scope.form.contentType,
+                // 当前取, 或 sessionStorage中取
+                'Cookie': $scope.form.Cookie || sessionStorage[ "simuLoginCookie" ]
+            };
+            return $scope.view.apiTest.headers = requestHeaders;
+        };
+
+        // ***********************************选中 api 目录和api*********************************************
+        // 当前选中api 索引
+        $scope.api_catalog_inx = parseInt( /api_catalog_inx=(\d)&/.exec( location.href )[ 1 ] );
+        $scope.api_inx = parseInt( /api_inx=(\d)/.exec( location.href )[ 1 ] );
+
+        $scope.selApiCatalog = function( $index ){
+            $scope.api_inx = 0;
+            $scope.api_catalog_inx = $index;
+        };
+        $scope.selApi = function( $index ){
+            $scope.api_inx = $index;
+        };
+        function syncData() {
+            var curApi = $scope.view.curApi = $scope.view.allApi[ $scope.api_catalog_inx ].apiList[ $scope.api_inx ];
+
+            location.href = "#api_catalog_inx=" + $scope.api_catalog_inx + "&api_inx=" + $scope.api_inx;
+
+            $scope.view.apiTest = {
+                url: curApi.url,
+                type: curApi.type
+            };
+            $scope.form.contentType = curApi.contentType;
+            // 参数显示
+            var html = Util.JsonUtilTxt.convertToString( curApi.param );
+            $( ".api-param-show" ).val( html );
+
+            // url 增加域名前缀
+            $scope.view.apiTest.url = $scope.domain + $scope.view.apiTest.url;
+        }
+
+        // 选中api
+        $scope.$watch( "api_catalog_inx", function () {
+            syncData()
+        } );
+        $scope.$watch( "api_inx", function () {
+            syncData()
+        } );
+
+
+        //region ****************************测试 api 接口*****************************
+        $scope.TYPE_LIST = [ "GET", "POST", "PUT" ];
+        $scope.CONTENT_TYPE_LIST = [ "text/plain;charset=UTF-8", "application/json;charset=UTF-8", "application/x-www-form-urlencoded;charset=UTF-8" ];
+        $scope.form.contentType = "text/plain";
+        $scope.form.Cookie = "";// 用于模拟App登录的
+        $scope.form.requestParams = {};
+        $scope.view.apiTestTime = 0;
+        $scope.view.apiTest = {
+            url: "http://www.baidu.com",
+            headers: {},
+            type: "GET",
+            param: {},
+            result: ""
+        };
+
+        $scope.testApi = function () {
+            var param = $( ".api-param-show" ).val();
+            try {
+                param = $scope.view.apiTest.param = JSON.parse( param );
+            } catch ( e ) {
+                return alert( e + "参数需是JSON格式" );
+            }
+            var apiTestTime = new Date();
+            Util.ajax( {
+                url: "/testApi2.ajax",
+                data: {
+                    param: JSON.stringify( $scope.view.apiTest )
                 },
-                result:""
+                success: function ( res ) {
+                    var obj;
+                    try {
+                        obj = JSON.parse( res.content );
+                    } catch ( e ) {
+                        obj = res;
+                    }
+                    $scope.$apply( function () {
+                        $scope.view.apiTestTime = new Date() - apiTestTime;
+                        $scope.view.apiTest.result = obj;
+                    } );
+                }
 
-            }
+            } );
 
         };
-
-
-        $scope.selApi = function($index){
-
+        //endregion
+        //region ****************************模拟APP登录*****************************
+        $scope.form.simuAccount = "13266720440";
+        $scope.form.simuPassword = "hello123";
+        var loginInx = null;
+        $scope.view.simuLoginUser = sessionStorage[ "simuLoginUser" ];
+        function initSimulateLogin() {
+            $( ".simulate-login-btn" ).click( function () {
+                //自定页
+                loginInx = layer.open( {
+                    type: 1,
+                    title: "模拟登录",
+                    skin: 'layui-layer-demo', //样式类名
+                    shift: 2,
+                    shadeClose: true, //开启遮罩关闭
+                    content: $( ".simulate-login" )
+                } );
+            } );
+        }
+        // 模拟登录,把Cookie = 放入 $scope.form.Cookie
+        $scope.simuLogin = function () {
+            var param = {
+                url: $scope.domain + "/api/login",
+                headers: {},
+                type: "POST",
+                contentType: "text/plain",
+                param: {
+                    "username": $scope.form.simuAccount,
+                    "password": Util.toMD5( $scope.form.simuPassword ),
+                    "clientId": "pc-lehman-10086"
+                }
+            };
+            param = JSON.stringify( param );
             Util.ajax( {
-                    url: "/api.ajax",
-                    data: {
-                        api_catalog: $scope.apiCatalog,
-                        api_inx: $index
-                    },
-                    success: function ( res ) {
-                        var html = res.replace( /\n/g, "<br/>" ).replace( /\t/g, "&nbsp;&nbsp;&nbsp;&nbsp;" );
-                        console.log( html )
-                        $( ".api-display" ).html( html );
+                url: "/testApi2.ajax",
+                data: {
+                    param: param
+                },
+                success: function ( res ) {
+                    try {
+                        var res = JSON.parse( res.content ).data;
+                        sessionStorage[ "simuLoginUser" ] = $scope.view.simuLoginUser = "登录成功!!! \n acount : " + $scope.form.simuAccount +
+                        " ;\n userId : " + res.userId + " ;\n JSESSIONID : " + res.jsessionId + " ; TOKEN : " + res.token;
+                        sessionStorage[ "simuLoginCookie" ] = $scope.form.Cookie = "JSESSIONID=" + res.jsessionId + "; TOKEN=" + res.token;
+                        $scope.$apply();
+                        layer.close( loginInx );
+                    } catch ( e ) {
+                        alert( "登录失败:" + e );
                     }
                 }
-            );
+            } );
         };
-
+        //endregion
+        //region ****************************一些初始化*****************************
         $( function () {
-            Util.ajax( {
-                    url: "/testApi.ajax",
-                    dataType:"text",
-                    success: function ( res ) {
-                        $( ".title-intro").html(res);
-                    }
-                }
-            );
+            initMD5Tool();
+            initSimulateLogin();
         } );
-
-
-
-
-
-        // 根据className 显示
-        $( "[data-class-name]" ).mouseover( function () {
-            var clsName = $( this ).attr( "data-class-name" );
-            if ( !clsName ) return;
-            var $clsTipsShow = $( "[data-class-name] span:eq(0)" );
-            if ( !$clsTipsShow.html() ) {
-                var user = Util.queryUniq( "select * from ? where id = 2", [ clsName ] );
-                var html = JsonUtil.convertToString( user );
-                $clsTipsShow.html( html );
-            }
-        } );
-
-
+        //endregion
+        //region ****************************浮动工具*****************************
+        //MD5 工具
+        function initMD5Tool() {
+            var $md5Input = $( ".md5-tool input" );
+            $( ".md5-tool botton" ).click( function () {
+                var md5Val = Util.toMD5( $md5Input.eq( 0 ).val() );
+                $md5Input.eq( 1 ).val( md5Val );
+            } );
+        }
+        //endregion
     } );
 
     // require加载器,需要用bootstrap来启动angular编译页面
     angular.bootstrap( document.getElementsByTagName( "body" ), [ 'api' ] );
-
-
-
-
 } );
 
 
-// 测试
-var JsonUtil = {
-    n: "\n", t: "	", s: " ",
-    convertToString: function ( o ) {
-        var html = [];
-        var ju = JsonUtil;
-        var objHtml = "";
-        for ( var k in o ) {
-            var row = "";
-            var kHtml = "", vColor = "";
-            // 值  value
-            v = o[ k ];
-            //变量名 key
-            if ( v.type === 'Object' ) {
-                kHtml = '<span style="color:rgb(122, 122, 67);">' + k + '</span>';
-                var clsNameShort = v.className.substring( v.className.toString().lastIndexOf( "." ) + 1, v.className.length );
-                objHtml = '<span data-class-name="' + v.className + '"><span></span>' + (clsNameShort || v.className) + '</span>';
 
-            } else {
-                kHtml = '<span style="color:rgb(102, 14, 122);font-weight:bold;">' + k + '</span>';
-            }
-            // 追加属性注释说明
-            row = ju.n + ju.t + '<span style="color:#808080;font-style: italic;">//' + v.note + '</span>';
-
-            row += ju.n + ju.t + kHtml + ju.s + ':' + JsonUtil.s + '<span style="color:green;font-weight:bold;">{' + ( objHtml || v.type) + '}</span>';
-            html.push( row );
-        }
-        return "{" + html.join( "," ) + ju.n + "}";
-    }
-};
-JsonUtil.n = "<br/>";
-JsonUtil.t = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
-JsonUtil.s = "&nbsp;";

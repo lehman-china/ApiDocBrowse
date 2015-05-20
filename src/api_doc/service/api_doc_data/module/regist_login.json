@@ -1,0 +1,116 @@
+{
+  "module": "regist_login",
+  "moduleName": "注册登录,找回密码",
+  "explain": "注册登录,找回密码一些API",
+  "apiList": [
+    {
+      "name": "用户登录",
+      "url": "/api/login",
+      "type": "POST",
+      "contentType": "text/plain;charset=UTF-8",
+      "param": {
+        "username": "type=String& explain=用户名,不能为空& default=13266720440",
+        "password": "type=String& explain=密码,MD5(32小)加密& default=f30aa7a662c728b7407c54ae6bfd27d1",
+        "clientId": "type=String& explain=设备ID& default=10086",
+        "resource": "type=String& explain=不清楚,非必需",
+        "clientVersion": "type=String& explain=客户端版本号"
+      },
+      "result": {
+        "state": "type=String& explain=状态码,0表示成功",
+        "message": "type=String& explain=返回消息",
+        "data": {
+          "jsessionId": "894fa12f-55bc-4ad1-9c32-7eb5337a2f5f",
+          "openId": "cyyz_leijianjun3",
+          "globalSessionTimeout": "2400000",
+          "userId": "8808b659-f9c6-4d3b-873a-d7163a279e2e",
+          "token": "00014d276b1afa00"
+        }
+      }
+    },
+    {
+      "name": "发送注册验证码到指定手机",
+      "url": "/api/register/send_regist_captcha",
+      "type": "GET",
+      "contentType": "text/plain;charset=UTF-8",
+      "param": {
+        "phone": "type=String& explain=接收验证码的手机号码& default=13266720440"
+      },
+      "result": {
+        "state": "type=String& explain=状态码,0表示成功",
+        "message": "type=String& explain=返回消息",
+        "data": {
+          "__explain": "如果错误会有错误代码"
+        }
+      }
+    },
+    {
+      "name": "注册",
+      "url": "/api/register",
+      "type": "GET",
+      "contentType": "text/plain;charset=UTF-8",
+      "param": {
+        "phone": "type=String& explain=用户注册的手机号码& default=13266720440",
+        "password": "type=String& explain=注册的密码& default=hello123",
+        "captcha": "type=String& explain=手机接收到的验证码& default=667542"
+      },
+      "result": {
+        "state": "type=String& explain=状态码,0表示成功",
+        "message": "type=String& explain=返回消息",
+        "data": {
+          "__explain": "注册后的user对象"
+        }
+      }
+    },
+    {
+      "name": "发送找回密码验证码到指定手机",
+      "url": "/api/register/send_retrieve_captcha",
+      "type": "GET",
+      "contentType": "text/plain;charset=UTF-8",
+      "param": {
+        "phone": "type=String& explain=接收验证码的手机号码& default=13266720440"
+      },
+      "result": {
+        "state": "type=String& explain=状态码,0表示成功",
+        "message": "type=String& explain=返回消息",
+        "data": {
+          "__explain": "如果错误会有错误代码"
+        }
+      }
+    },
+    {
+      "name": "对比手机验证码是否正确",
+      "url": "/api/register/auth_captcha",
+      "type": "GET",
+      "contentType": "text/plain;charset=UTF-8",
+      "param": {
+        "phone": "type=String& explain=用户注册的手机号码& default=13266720440",
+        "captcha": "type=String& explain=手机接收到的验证码& default=667542"
+      },
+      "result": {
+        "state": "type=String& explain=状态码,0表示成功",
+        "message": "type=String& explain=返回消息",
+        "data": {
+          "__explain": "对比结果"
+        }
+      }
+    },
+    {
+      "name": "使用手机验证码-重置密码",
+      "url": "/api/register/reset_password",
+      "type": "GET",
+      "contentType": "text/plain;charset=UTF-8",
+      "param": {
+        "phone": "type=String& explain=用户注册的手机号码& default=13266720440",
+        "password": "type=String& explain=注册的密码& default=hello123",
+        "captcha": "type=String& explain=手机接收到的验证码& default=667542"
+      },
+      "result": {
+        "state": "type=String& explain=状态码,0表示成功",
+        "message": "type=String& explain=返回消息",
+        "data": {
+          "__explain": "重置结果"
+        }
+      }
+    }
+  ]
+}

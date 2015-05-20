@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <% include common/template/public_head.html %>
+    <title>文档中心</title>
+    <link rel="stylesheet" type="text/css" href="/css/api.css">
+    <script src="js/apiDocCenter.js" type="text/javascript"></script>
+</head>
+<body ng-controller="apiDocCenterCtrl">
+<% include common/template/nav_head.html %>
+
+<div class="container">
+
+    <ul class="breadcrumb" style="background-color: white;margin-top: 10px;margin-bottom: 10px;">
+        <li>
+            <a href="#">主页</a>
+        </li>
+        <li>
+            <a href="#">类目</a>
+        </li>
+        <li class="active">
+            主题
+        </li>
+    </ul>
+    <div class="line"></div>
+    <br>
+    <div class="row">
+
+        <div class="col-sm-3" role="complementary">
+            <div class="panel panel-info">
+                <div class="panel-heading">文档中心</div>
+                <div class="panel-body">
+
+                </div>
+            </div>
+
+        </div><!-- /.main -->
+        <!-- 正文 -->
+        <div class="col-sm-9">
+            <div class="panel panel-info">
+                <div class="panel-heading">各域名说明:</div>
+                <div class="panel-body">
+                    局域网接口联调:   <a href="http://192.168.1.100:8080/">http://192.168.1.100:8080/</a> -------><a href="http://192.168.1.100:8080/open/public/information/list">公众号操作页面</a><br/>
+                    长阳测试(公众号测试环境 ):   <a href="http://www.myymjk.com/">http://www.myymjk.com/</a>-------><a href="http://www.myymjk.com/open/public/information/list">公众号操作页面</a><br/>
+                    天使育苗(正式环境,别瞎搞):   <a href="http://www.tsymjk.com/">http://www.tsymjk.com/</a>-------><a href="http://www.tsymjk.com/open/public/information/list">公众号操作页面</a><br/>
+                </div>
+            </div>
+            <div class="panel panel-info">
+                <div class="panel-heading">web页面说明</div>
+                <div class="panel-body">
+                    快速咨询:   /open/public/consulting/user/publicChat<br/>
+                    名医面对面: /open/public/consulting/home?is_app=1<br/>
+                    圈子论坛:   /open/public/forum/home?is_app=1<br/>
+                    关于页面:   /about<br/>
+                </div>
+            </div>
+
+
+            <div class="panel panel-info">
+                <div class="panel-heading">状态码</div>
+                <div class="panel-body">
+                    <textarea style="width:695px;height:800px;" wrap="off">
+/*
+* 返回码总体说明： ret = 0: 正确返回 ret > 0: 调用OpenAPI时发生错误，需要开发者进行相应的处理。 -50 <= ret <= -1: 接口调用不能通过接口代理机校验，需要开发者进行相应的处理。 ret <-50:
+* 系统内部错误，请通过企业QQ联系技术支持，调查问题原因并获得解决方案。
+*/
+
+/** FIXME */
+private static final long serialVersionUID = -7771374323162062273L;
+
+/** 状态码成功 */
+public final static int STATUS_CODE_SUCCESS = 0;
+
+/** 状态调用失败 */
+public final static int STATUS_CODE_FAILURE = 300;
+
+/** 状态码超时 */
+public final static int STATUS_CODE_TIMEOUT = 301;
+
+/** 状态码禁止访问 */
+public final static int STATUS_CODE_FORBIDDEN = 403;
+
+/** 状态码未找到 */
+public final static int STATUS_CODE_NOTFOUND = 404;
+
+/** 状态码服务器端错误 */
+public final static int STATUS_CODE_SERVEERROR = 500;
+
+/****** 未知帐号错误！ ******/
+public final static int STATUS_LOGIN_UNKNOWNACCOUNT = 1000;
+
+/****** 密码错误！ ******/
+public final static int STATUS_LOGIN_INCORRECTCREDENTIALS = 1001;
+
+/****** 客户端id未指定错误！ ******/
+public final static int STATUS_LOGIN_CLIENTIDNOTFOUND = 1002;
+
+/****** 验证码错误！ ******/
+public final static int STATUS_LOGIN_CAPTCHA = 1003;
+
+/****** 认证失败！ ******/
+public final static int STATUS_LOGIN_AUTHENTICATION = 1004;
+
+/****** 账号被冻结！ ******/
+public final static int STATUS_LOGIN_DISABLEDACCOUNT = 1005;
+
+/****** 强制升级！ ******/
+public final static int STATUS_FORCE_UPDATE = 1006;
+
+/****** 设备未进行接入登记！ ******/
+public final static int STATUS_DEVICE_NOT_REGISTER = 1007;
+
+/****** 设备已登记，未进行审核！ ******/
+public final static int STATUS_DEVICE_NOT_AUDIT = 1008;
+
+/****** 账号未激活 ******/
+public final static int STATUS_ACCOUNT_NOT_ACTIVE = 1009;
+
+/****** 公有云登录未配置域 ******/
+public final static int STATUS_NO_DOMAIN_IN_PUBCLOUD = 1010;
+
+/** 返回状态 */
+private int state = STATUS_CODE_SUCCESS;
+
+/** 消息 */
+private String message = "";
+
+/** 返回数据 */
+private Object data = "";
+            </textarea>
+                </div>
+            </div>
+
+
+
+
+
+
+
+
+        </div><!-- /.sidebar -->
+
+    </div><!-- /.row -->
+
+</div><!-- /.container -->
+<% include common/template/nav_bottom.html %>
+
+
+
+</body>
+</html>

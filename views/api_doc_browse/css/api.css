@@ -1,17 +1,6 @@
-/************ ×óµ¼º½**********/
+/************ å·¦ä¾§æ **********/
 
-.nav-left {
-    padding-left: 1px;
-    border-top: 1px solid #CEDEEF;
-    border-right: 1px solid #CEDEEF;
-}
-
-.nav-left li:first-child {
-    line-height: 46px;
-    font-weight:bold;
-}
 .nav-left li {
-    padding-left: 15px;
     list-style-type: none;
     height: 46px;
     overflow: hidden;
@@ -31,48 +20,99 @@
     background-color: #D8E5F4;
 }
 
-/* ×óµ¼º½Ñ¡ÖÐºóµÄ¼ýÍ·*/
-.nav-left li.active b {
-    z-index:999;
-    top: 13px;
-    left: 1px;
-    position: relative;
-    float: right;
-    border-top: 10px solid transparent;
-    border-right: 10px solid white;
-    border-bottom: 10px solid transparent;
-}
-
-.nav-left li h5:first-child {
-    font-weight:bold
-}
-
-/* ÕýÎÄ */
-.head-title {
-    background-color: #D6E3F1;
-    border-top: 1px solid #6A9CC3;
-    height: 30px;
-    line-height: 30px;
-    margin-bottom: 15px;
-    margin-top: 35px;
-    padding-left: 8px;
-    font-size: 14px;
-}
 
 
-/*ÊôÐÔÃû*/
-*[data-class-name]{
-    position:relative;
-
-}
-/* ÀàÌáÊ¾ÏÔÊ¾¿ò*/
-*[data-class-name] span:first-child{
+/*æŽ§åˆ¶hoverå±•å¼€å­å…ƒç´ çš„å±•å¼€*/
+.hover-unfold > ul{
     display:none;
+    z-index: 9999;
     border:1px solid #000;
     position:absolute;
     top:14px;
     background-color:#FFFAE3;
 }
-*[data-class-name]:hover span:first-child{
+.hover-unfold:hover > ul{
     display:inline-block;
 }
+
+/* ul li hover style */
+.ul-hover-style > li {
+    padding-right: 30px;
+    list-style-type: none;
+    height: 46px;
+    line-height: 46px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    border-bottom: 1px solid #CEDEEF;
+    font-size: 12px;
+    cursor:pointer;
+}
+
+.ul-hover-style > li:hover {
+    background-color: #D8E5F4;
+}
+
+/*********************************ç™»å½•çš„è®¾ç½®*****************/
+.simulate-login .form-group:first-child {
+
+    margin-left: 18px;
+    margin-right: 18px;
+}
+.simulate-login .form-group {
+    margin-top: 15px;
+}
+
+.simulate-login .btn-info {
+    margin-left: 27%;
+    margin-top: 15px;
+    padding-left: 70px;
+    padding-right: 70px;
+}
+
+/****************************API æµ‹è¯•è¯·æ±‚è®¾ç½®å±‚*******************/
+#request-config-layer {
+    display:none;
+    position:absolute;
+    font-size: 14px;
+
+    z-index:9999;
+    left: -777px;
+    top: -15px;
+    width: 820px;
+    height: 280px;
+
+    white-space: nowrap;
+    border:1px solid #000;
+    background-color:#FFFAE3;
+
+
+    padding-right: 20px;
+    padding-left: 35px;
+    padding-top: 15px;
+
+}
+#request-config:hover #request-config-layer{
+    display:block;
+}
+
+#request-config-layer > .form-group:nth-child(1){
+    background-color: silver;
+}
+
+
+/*****************æµ®åŠ¨,å·¥å…·*****************/
+.api-float-tool{
+    position:fixed;
+    left:10%;
+    top:70%;
+}
+/* md5  å·¥å…·*/
+.md5-tool{
+    height:180px;
+    width:280px;
+    display:block;
+}
+
+
+

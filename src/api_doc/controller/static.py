@@ -8,7 +8,7 @@ from src import app
 
 staticPath =  os.path.dirname(__file__) + "/../../../views/"
 
-@app.route('/static/<filename:path>')
+@app.route('/<filename:path>')
 def static(filename):
     print(filename)
     return static_file(filename, root=staticPath)

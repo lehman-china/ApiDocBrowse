@@ -1,0 +1,163 @@
+{
+  "module":"personal_center",
+  "moduleName": "个人中心",
+  "explain": "个人中心",
+  "apiList": [
+    {
+      "name": "个人中心首页,信息",
+      "url": "/api/personal/home",
+      "type": "GET",
+      "contentType": "text/plain;charset=UTF-8",
+      "param": {},
+      "result": {
+        "state": "type=String& explain=状态码,0表示成功",
+        "message": "type=String& explain=返回消息",
+        "data": {
+          "userName": "type=String& explain=用户名称",
+          "userAvatarUrl": "type=String& explain=用户头像url",
+          "babyName": "type=String& explain=宝宝名称",
+          "babyBirthday": "type=String& explain=宝宝生日"
+        }
+      }
+    },
+    {
+      "name": "我的收藏列表",
+      "url": "/api/personal/myFavoriteList",
+      "type": "GET",
+      "contentType": "text/plain;charset=UTF-8",
+      "param": {
+        "favoriteType": "type=String& explain=查看的类型,宝典=FAVORITE_INFORMATION ,贴子=FAVORITE_ARTICLE& default=FAVORITE_ARTICLE",
+        "page": "type=String& explain=页码& default=1",
+        "pageSize": "type=String& explain=1页显示的条数,默认16& default=16"
+      },
+      "result": {
+        "state": "type=String& explain=状态码,0表示成功",
+        "message": "type=String& explain=返回消息",
+        "data": {
+          "lastPage": "type=Boolean& explain=是否是最后一页",
+          "forumContentList": [{
+            "forumId": "type=String& explain=帖子ID",
+            "forumTypeName": "type=String& explain=类型名称",
+            "content": "type=String& explain=内容预览",
+            "userName": "type=String& explain=楼主名字",
+            "avatarUrl": "type=String& explain=楼主头像url",
+            "replyCount": "type=String& explain=回复数统计",
+            "praiseCount": "type=String& explain=点赞数统计",
+            "showTimeName": "type=String& explain=发帖时间中文显示"
+          }]
+        }
+      }
+    },
+    {
+      "name": "我的贴子列表",
+      "url": "/api/personal/myForumList",
+      "type": "GET",
+      "contentType": "text/plain;charset=UTF-8",
+      "param": {
+        "forumType": "type=String& explain=查看的类型,我回复的=reply,我发表的=publish& default=publish",
+        "page": "type=String& explain=页码& default=1",
+        "pageSize": "type=String& explain=1页显示的条数,默认16& default=16"
+      },
+      "result": {
+        "state": "type=String& explain=状态码,0表示成功",
+        "message": "type=String& explain=返回消息",
+        "data": {
+          "lastPage": "type=Boolean& explain=是否是最后一页",
+          "contentList": [{
+            "forumId": "type=String& explain=帖子ID",
+            "forumTypeName": "type=String& explain=类型名称",
+            "content": "type=String& explain=内容预览",
+            "userName": "type=String& explain=楼主名字",
+            "avatarUrl": "type=String& explain=楼主头像url",
+            "replyCount": "type=String& explain=回复数统计",
+            "praiseCount": "type=String& explain=点赞数统计",
+            "showTimeName": "type=String& explain=发帖时间中文显示"
+          }]
+        }
+      }
+    },
+    {
+      "name": "我的名医列表",
+      "url": "/api/personal/myDoctorList",
+      "type": "GET",
+      "contentType": "text/plain;charset=UTF-8",
+      "param": {
+        "page": "type=String& explain=页码& default=1",
+        "pageSize": "type=String& explain=1页显示的条数,默认16& default=16"
+      },
+      "result": {
+        "state": "type=String& explain=状态码,0表示成功",
+        "message": "type=String& explain=返回消息",
+        "data": {
+          "lastPage": "type=Boolean& explain=是否是最后一页",
+          "contentList": [{
+            "doctorId": "type=String& explain=医生ID",
+            "name": "type=String& explain=医生名称",
+            "avatarUrl": "type=String& explain=头像Url",
+            "focusCount": "type=String& explain=粉丝数量",
+            "intro": "type=String& explain=简介",
+            "position": "type=String& explain=职称",
+            "online": "type=String& explain=是否在线",
+            "consultingUrl": "type=String& explain=咨询的url"
+          }]
+        }
+      }
+    },
+    {
+      "name": "获得我的宝宝列表",
+      "url": "/api/personal/listBaby",
+      "type": "GET",
+      "contentType": "text/plain;charset=UTF-8",
+      "param": {},
+      "result": {
+        "state": "type=String& explain=状态码,0表示成功",
+        "message": "type=String& explain=返回消息",
+        "data": {
+          "babyId": "type=String& explain=宝宝ID",
+          "name": "type=String& explain=宝宝姓名",
+          "relatedId": "type=String& explain=关联标识（父母openId）",
+          "gender": "type=String& explain=性别:0为男 1为女",
+          "avatarUrl": "type=String& explain=宝宝头像url",
+          "birthday": "type=String& explain=宝宝出生日期"
+        }
+      }
+    },
+    {
+      "name": "添加 与 修改宝宝信息(有说明)",
+      "explain" : "我的宝宝头像修改步骤: \n  1.把用户上传的图片压缩为100x100像素,控制在200kb以下(接口有判断超过200kb上传错误,或更小减轻服务器负担,);\n  2.把图片数据转换为base64编码\n  3.调用本接口.收工,完毕",
+      "url": "/api/personal/saveBaby",
+      "type": "POST",
+      "contentType": "application/x-www-form-urlencoded;charset=UTF-8",
+      "param": {
+        "babyId": "type=String& explain=宝宝ID(无是新建,有则是修改)& default=",
+        "name": "type=String& explain=宝宝姓名& default=宝宝(接口数据测试)",
+        "relatedId": "type=String& explain=关联标识（父母openId）& default=de62ca6c-fa91-4c4f-a01c-325006f3906b",
+        "gender": "type=String& explain=性别:0为男 1为女& default=0",
+        "birthday": "type=String& explain=宝宝出生日期& default=2015-05-04",
+        "avatarImg": "type=String& explain=宝宝头像Base64数据& default=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"
+
+      },
+      "result": {
+        "state": "type=String& explain=状态码,0表示成功",
+        "message": "type=String& explain=返回消息",
+        "data": {
+          "__explain": "系统信息对象"
+        }
+      }
+    },
+    {
+      "name": "删除我的宝宝信息",
+      "url": "/api/personal/deleteBaby",
+      "type": "GET",
+      "contentType": "text/plain;charset=UTF-8",
+      "param": {
+        "babyId": "type=String& explain=要删除的宝宝ID& default=21de8b2a-31eb-4bfe-b62b-05bb62cd0474"
+      },
+      "result": {
+        "state": "type=String& explain=状态码,0表示成功",
+        "message": "type=String& explain=返回消息",
+        "data": null
+      }
+    }
+  ]
+}

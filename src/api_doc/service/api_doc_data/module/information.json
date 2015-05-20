@@ -1,0 +1,58 @@
+{
+  "module": "information",
+  "moduleName": "宝典,信息文章",
+  "explain": "宝典,信息文章",
+  "apiList": [{
+      "name": "获得宝典类型和广告图片集",
+      "url": "/api/information/types_and_head_imgs",
+      "type": "GET",
+      "contentType": "text/plain;charset=UTF-8",
+      "param": {
+      },
+      "result": {
+        "state": "type=String& explain=状态码,0表示成功",
+        "message": "type=String& explain=返回消息",
+        "data": {
+          "__explain": "宝典类型和图片url数组,图片需要和域名拼接"
+        }
+      }
+    },{
+      "name": "宝典列表+搜索宝典",
+      "url": "/api/information/search_info",
+      "type": "GET",
+      "contentType": "text/plain;charset=UTF-8",
+      "param": {
+        "page": "type=String& explain=页码& default=1",
+        "page.size": "type=String& explain=一页显示的条数& default=10",
+        "keyWord": "type=String& explain=搜索的关键字& default=杨杰",
+        "informationTypeId": "type=String& explain=文章类型ID,用宝典类型API查看;为null则为热门宝典& default="
+      },
+      "result": {
+        "state": "type=String& explain=状态码,0表示成功",
+        "message": "type=String& explain=返回消息",
+        "data": {
+          "infoId" : "type=String& explain=文章ID",
+          "viewPicture" : "type=String& explain=封面图片url",
+          "publisher" : "type=String& explain=作者",
+          "title" : "type=String& explain=标题",
+          "externalUrl" : "type=String& explain=文章链接"
+        }
+      }
+    }, {
+      "name": "查看宝典文章",
+      "url": "/api/information/view",
+      "type": "GET",
+      "contentType": "text/plain;charset=UTF-8",
+      "param": {
+        "infoId": "type=String& explain=宝典文章ID& default=00014c5b7678cb06"
+      },
+      "result": {
+        "state": "type=String& explain=状态码,0表示成功",
+        "message": "type=String& explain=返回消息",
+        "data": {
+          "__explain": "宝典数据,测试一看便知 , 文章内容使用 unescape 转码"
+        }
+      }
+    }
+  ]
+}

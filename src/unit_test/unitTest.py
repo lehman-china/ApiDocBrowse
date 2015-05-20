@@ -9,6 +9,7 @@
 
 import urllib.request
 import urllib.parse
+import re
 
 def get( url ):
     request = urllib.request.Request(url ,method='GET')
@@ -27,3 +28,16 @@ def post(url ,data ):
     return f.read().decode('utf-8')
 
 print( post(url,data) )
+
+def httpRequest( param ):
+    postData = ""
+    isJson = re.compile(r'urlencoded|json').match( param["headers"]["Content-Type"] )
+    if ( param["method"] == "POST" and isJson != None ):
+        postData = urllib.parse.urlencode( param["param"] ).encode('utf-8')
+    else:
+        uu = (re.compile(r'\?').match( param["url"] ) != None) and "&" or "?"
+        param["url"] = param["url"] + uu  + urllib.parse.urlencode( param["param"] ).encode('utf-8')
+
+
+    post(param.url ,postData )
+

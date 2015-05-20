@@ -1,0 +1,109 @@
+{
+  "module": "user",
+  "moduleName": "用户相关",
+  "explain": "用户相关的一些API",
+  "apiList": [
+    {
+      "name": "获得用户信息",
+      "url": "/api/user/get_info",
+      "type": "GET",
+      "contentType": "text/plain;charset=UTF-8",
+      "param": {
+      },
+      "result": {
+        "state": "type=String& explain=状态码,0表示成功",
+        "message": "type=String& explain=返回消息",
+        "data": {
+          "openId" : "type=String& explain=",
+          "userId" : "type=String& explain=",
+          "account" : "type=String& explain=账号",
+          "name" : "type=String& explain=用户名称",
+          "gender" : "type=String& explain=性别(0男,1女)",
+          "avatarUrl" : "type=String& explain=用户头像url",
+          "email" : "type=String& explain=Email",
+          "phone" : "type=String& explain=手机号码"
+        }
+      }
+    },
+    {
+      "name": "修改用户信息,头像 (有说明)",
+      "explain" : "头像修改步骤: \n  1.把用户上传的图片压缩为100x100像素,控制在200kb以下(接口有判断超过200kb上传错误,或更小减轻服务器负担,);\n  2.把图片数据转换为base64编码\n  3.调用本接口.收工,完毕.\n其他说明:\n  1.与修改头像共用一个接口\n  2.不修改的项,不传参数即可\n",
+      "url": "/api/user/set_info",
+      "type": "POST",
+      "contentType": "application/x-www-form-urlencoded;charset=UTF-8",
+      "param": {
+        "avatarImg": "type=String& explain=头像图片 Bese64位编码& default=data:image/gif;base64,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",
+        "name": "type=String& explain=名称不是账号& default=宝宝家长(测试接口数据)",
+        "gender": "type=String& explain=性别(0男,1女)& default=0",
+        "email": "type=String& explain=邮件& default=baidu@qq.com",
+        "phone": "type=String& explain=手机号& default=13266720440"
+      },
+      "result": {
+        "state": "type=String& explain=状态码,0表示成功",
+        "message": "type=String& explain=返回消息",
+        "data": {
+          "openId" : "type=String& explain=",
+          "userId" : "type=String& explain=",
+          "account" : "type=String& explain=账号",
+          "name" : "type=String& explain=用户名称",
+          "gender" : "type=String& explain=性别(0男,1女)",
+          "avatarUrl" : "type=String& explain=用户头像url",
+          "email" : "type=String& explain=Email",
+          "phone" : "type=String& explain=手机号码"
+
+        }
+      }
+
+    },
+    {
+      "name": "用户反馈与举报",
+      "url": "/api/user/feedback",
+      "type": "POST",
+      "contentType": "application/x-www-form-urlencoded;charset=UTF-8",
+      "param": {
+        "toUser.userId": "type=String& explain=被举报的用户(如果是反馈,不需要此参数)& default=8808b659-f9c6-4d3b-873a-d7163a279e2e",
+        "type": "type=String& explain=操作类型,1/2;1=举报,2=用户反馈& default=1",
+        "content": "type=String& explain=内容& default=我举报谁谁谁,发不雅图...(测试接口数据)"
+      },
+      "result": {
+        "state": "type=String& explain=状态码,0表示成功",
+        "message": "type=String& explain=返回消息",
+        "data": {
+        }
+      }
+    },
+    {
+      "name": "收藏,宝典文章/论坛帖子",
+      "url": "/api/personal/favorite",
+      "type": "GET",
+      "contentType": "text/plain;charset=UTF-8",
+      "param": {
+        "favoriteType": "type=String& explain=收藏的类型,宝典=FAVORITE_INFORMATION ,贴子=FAVORITE_ARTICLE& default=FAVORITE_ARTICLE",
+        "ownerId": "type=String& explain=被收藏数据ID,可以是资讯的ID,也可以是社区话题的ID& default=00014c6fe52ac300",
+        "isCancel": "type=String& explain=是否取消收藏,字符串形式的:true/false& default=false"
+      },
+      "result": {
+        "state": "type=String& explain=状态码,0表示成功",
+        "message": "type=String& explain=返回消息",
+        "data": {
+        }
+      }
+    },
+    {
+      "name": "医生关注,取消关注",
+      "url": "/api/personal/doctorFocus",
+      "type": "GET",
+      "contentType": "text/plain;charset=UTF-8",
+      "param": {
+        "doctorOpenId": "type=String& explain=医生的openId& default=00014c5a7796f11f",
+        "isFocus": "type=String& explain=是否关注 (1=关注,0=取消关注)& default=1"
+      },
+      "result": {
+        "state": "type=String& explain=状态码,0表示成功",
+        "message": "type=String& explain=返回消息",
+        "data": {
+        }
+      }
+    }
+  ]
+}

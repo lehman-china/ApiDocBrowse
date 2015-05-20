@@ -1,0 +1,181 @@
+{
+  "module": "forum",
+  "moduleName": "论坛圈子",
+  "explain": "论坛圈子",
+  "apiList": [
+    {
+      "name": "获得论坛类型和广告图片集",
+      "url": "/api/forum/types_and_head_imgs",
+      "type": "GET",
+      "contentType": "text/plain;charset=UTF-8",
+      "param": {
+      },
+      "result": {
+        "state": "type=String& explain=状态码,0表示成功",
+        "message": "type=String& explain=返回消息",
+        "data": {
+          "__explain": "宝典类型和图片url数组,图片需要和域名拼接"
+        }
+      }
+    },
+    {
+      "name": "论坛列表+搜索宝典",
+      "url": "/api/forum/search_info",
+      "type": "GET",
+      "contentType": "text/plain;charset=UTF-8",
+      "param": {
+        "page": "type=String& explain=页码& default=1",
+        "pageSize": "type=String& explain=一页显示的条数& default=10",
+        "keyWord": "type=String& explain=搜索的关键字;为空搜索全部& default=",
+        "forumTypeId": "type=String& explain=类型ID,类型API查看;为空则为热门宝典& default=00014c5b5c64e905"
+      },
+      "result": {
+        "state": "type=String& explain=状态码,0表示成功",
+        "message": "type=String& explain=返回消息",
+        "data": {
+          "lastPage": "type=Boolean& explain=是否是最后一页",
+          "forumViews": [{
+            "forumId": "type=String& explain=帖子ID",
+            "forumTypeName": "type=String& explain=类型名称",
+            "content": "type=String& explain=内容预览",
+            "userName": "type=String& explain=楼主名字",
+            "avatarUrl": "type=String& explain=楼主头像url",
+            "replyCount": "type=String& explain=回复数统计",
+            "praiseCount": "type=String& explain=点赞数统计",
+            "showTimeName": "type=String& explain=发帖时间中文显示"
+          }]
+        }
+      }
+    },
+    {
+      "name": "查看论坛帖子详情",
+      "url": "/api/forum/view",
+      "type": "GET",
+      "contentType": "text/plain;charset=UTF-8",
+      "param": {
+        "forumId": "type=String& explain=帖子ID& default=00014d36c057ff03",
+        "pageSize": "type=String& explain=控制回复显示的数量,可不传,默认16& default=16"
+      },
+      "result": {
+        "state": "type=String& explain=状态码,0表示成功",
+        "message": "type=String& explain=返回消息",
+        "data": {
+          "forumId": "type=String& explain=帖子ID",
+          "forumTypeName": "type=String& explain=所属帖子的分类名称",
+          "avatarUrl": "type=String& explain=头像Url",
+          "replyCount": "type=Integer& explain=回复数统计(一级回复)",
+          "praiseCount": "type=Integer& explain=点赞数统计",
+          "isFavorite": "type=Integer& explain=是否收藏(1/0)",
+          "isPraise": "type=Integer& explain=是否点赞(1/0)",
+          "isMyForum": "type=Integer& explain=是否是我发的帖子(1/0)",
+          "dateTime": "type=String& explain=发帖时间",
+          "openId": "type=String& explain=楼主的openId",
+          "userId": "type=String& explain=楼主userId",
+          "userName": "type=String& explain=楼主userName",
+          "content": "type=String& explain=楼主发的内容",
+          "replys": "type=String& explain=回复区,属性如上雷同,childReplys 2级回复"
+        }
+      }
+    },
+    {
+      "name": "查看帖子更多回复",
+      "url": "/api/forum/more_reply",
+      "type": "GET",
+      "contentType": "text/plain;charset=UTF-8",
+      "param": {
+        "forumId": "type=String& explain=帖子ID& default=00014d36c057ff03",
+        "pageNumber": "type=String& explain=查看第几页的回复& default=2",
+        "pageSize": "type=String& explain=页码大小,可不传,默认16& default=5"
+      },
+      "result": {
+        "state": "type=String& explain=状态码,0表示成功",
+        "message": "type=String& explain=返回消息",
+        "data": {
+          "openId": "type=String& explain=回复者openId",
+          "userId": "type=String& explain=回复者userId",
+          "userName": "type=String& explain=回复者userName",
+          "content": "type=String& explain=回复的内容",
+          "childReplys": "type=String& explain=2级回复,属性如上雷同;"
+        }
+      }
+    },
+    {
+      "name": "发帖 (有说明)",
+      "explain": "发帖步骤: \n  1.把用户上传的图片压缩,控制在512kb以下(或更小减轻服务器负担);\n  2.把图片数据转换为base64编码\n  3.调用本接口.收工,完毕. ",
+      "url": "/api/forum/article/send",
+      "type": "POST",
+      "contentType": "application/x-www-form-urlencoded;charset=UTF-8",
+      "param": {
+        "forumType.forumTypeId": "type=String& explain=帖子类型ID,表示在那个分类下发帖& default=00014c5b5c64e905",
+        "content": "type=String& explain=发帖的内容& default=发帖测试,接口模拟App发帖(测试接口数据)",
+        "lstForumPicture[0].imageBase64": "type=String& explain=发帖图片的base64编码& default=data:image/gif;base64,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",
+        "lstForumPicture[1].imageBase64": "type=String& explain=这样表示数组,最多10张& default=data:image/gif;base64,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"
+      },
+      "result": {
+        "state": "type=String& explain=状态码,0表示成功",
+        "message": "type=String& explain=返回消息",
+        "data": "type=String& explain=帖子的ID,用于发帖后去往帖子页面"
+      }
+    },
+    {
+      "name": "回复帖子",
+      "url": "/api/forum/reply",
+      "type": "POST",
+      "contentType": "application/x-www-form-urlencoded;charset=UTF-8",
+      "param": {
+        "forum.forumId": "type=String& explain=所属帖子的ID& default=00014d4d6c07cc58",
+        "parentId": "type=String& explain=父replyId,注意!回复楼主时为null不传.否则bug& default=",
+        "replyToOpenId": "type=String& explain=回复那个用户,openId& default=cyyz_18711064470",
+        "replyContent": "type=String& explain=回复内容& default=我是回复数据...(接口测试数据)"
+      },
+      "result": {
+        "state": "type=String& explain=状态码,0表示成功",
+        "message": "type=String& explain=返回消息",
+        "data": "type=String& explain=刚刚回复的ID"
+      }
+    },
+    {
+      "name": "点赞+取消赞",
+      "url": "/api/forum/praise",
+      "type": "GET",
+      "contentType": "text/plain;charset=UTF-8",
+      "param": {
+        "forum.forumId": "type=String& explain=点赞的帖子ID& default=00014d4d6c07cc58",
+        "isPraise": "type=String& explain=点赞或取消点赞 1/0& default=1"
+      },
+      "result": {
+        "state": "type=String& explain=状态码,0表示成功",
+        "message": "type=String& explain=返回消息",
+        "data": "type=String& explain=."
+      }
+    },
+    {
+      "name": "删除我的帖子",
+      "url": "/api/forum/article/delete",
+      "type": "GET",
+      "contentType": "text/plain;charset=UTF-8",
+      "param": {
+        "forumId": "type=String& explain=要删除帖子的ID& default=00014d4d6c07cc58"
+      },
+      "result": {
+        "state": "type=String& explain=状态码,0表示成功",
+        "message": "type=String& explain=返回消息",
+        "data": "type=String& explain="
+      }
+    },
+    {
+      "name": "删除我的回复",
+      "url": "/api/forum/delete_reply",
+      "type": "GET",
+      "contentType": "text/plain;charset=UTF-8",
+      "param": {
+        "forumReplyId": "type=String& explain=要删除回复的ID& default=00014d4d6c07cc58"
+      },
+      "result": {
+        "state": "type=String& explain=状态码,0表示成功",
+        "message": "type=String& explain=返回消息",
+        "data": "type=String& explain="
+      }
+    }
+  ]
+}

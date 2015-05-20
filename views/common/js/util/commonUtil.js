@@ -83,6 +83,10 @@ Util.getRandomNum = function ( Min, Max ) {
     var Rand = Math.random();
     return (Min + Math.round( Rand * Range ));
 };
+
+// MD5 tool
+//Util.toMD5 = MD5.hex_md5;
+
 /** ************************************************************************************ */
 
 /**
@@ -123,6 +127,142 @@ Util.eachAddProperty = function ( array, addObj ) {
         }
     }
 };
+
+
+// html 格式带颜色 JSON 输出
+var JsonUtil = {
+    n: "<br/>", t: "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;", s: "&nbsp;",
+    convertToString: function ( a ) {
+        return JsonUtil.__writeObj( a, 1 )
+    }, __writeObj: function ( a, b, c ) {
+        var d, e, f, g, h, i, j, k, l, m, n,ju = JsonUtil;
+        if ( null == a )return "null";
+        // 如果不是对象类型,则直接返回
+        if ( a.constructor == Number || a.constructor == Date || a.constructor == String || a.constructor == Boolean )
+            return d = a.toString(), e = c ? ju.__repeatStr( ju.t, b - 1 ) : "",
+                a.constructor == String || a.constructor == Date ? e + ('<span style="color: green;font-weight:bold;">"' + d + '"</span>') : a.constructor == Boolean ? e +
+                '<span style="color:#000080;font-weight:bold;">'+d.toLowerCase()+'</span>' : e +
+                "<span style='color:#0000ff;font-weight:bold;'>"+d+"</span>";
+        f = [];
+        for ( g in a ) {
+            // 值  value
+            j = a[ g ];
+            //变量名 key
+            if ( typeof j === 'object' ){
+                g = '<span style="color:rgb(122, 122, 67);">\"'+g + '\"</span>';
+            } else {
+                g = '<span style="color:rgb(102, 14, 122);font-weight:bold;">\"'+g + '\"</span>';
+            }
+
+            if ( h = [], i = ju.__repeatStr( ju.t, b ), h.push( i ),h.push( g + ju.s +':' + ju.s ),j, null == j )
+                h.push( '<span style="color:#000080;font-weight:bold;">null</span>' );
+            else if ( k = j.constructor, k == Array ) {
+                for ( h.push( "[" + ju.s  ), l = b + 2, m = [], n = 0; n < j.length; n++ )
+                    m.push( ju.__writeObj( j[ n ], l ) );
+                h.push( m.join( ju.s +',' + ju.s ) ), h.push( ju.s+"]" )
+            } else k == Function ? h.push( "[Function]" ) : h.push( ju.__writeObj( j, b + 1 ) );
+            f.push( h.join( "" ) )
+        }
+
+        return "{" + ju.n + f.join( "," + ju.n ) + ju.n + ju.__repeatStr( ju.t, b - 1 ) + "}"
+    }, __isArray: function ( a ) {
+        return a ? a.constructor == Array : !1
+    }, __repeatStr: function ( a, b ) {
+        var d, c = [];
+        if ( b > 0 )for ( d = 0; b > d; d++ )c.push( a );
+        return c.join( "" )
+    }
+};
+Util.JsonUtil = JsonUtil;
+
+// api说明对象,HTML 格式化美化 输出
+var JsonUtilApiDoc = {
+    n: "<br/>", t: "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;", s: "&nbsp;",
+    convertToString: function ( a ) {
+        return JsonUtilApiDoc.__writeObj( a, 1 )
+    }, __writeObj: function ( a, b, c ) {
+        var d, e, f, g, h, i, j, k, l, m, n,ju = JsonUtilApiDoc;
+        if ( null == a )return "null";
+        // 如果不是对象类型,则直接返回
+        if ( a.constructor == String ){
+            a = a.toString();
+            if ( /type=/.test(a) && /explain=/.test(a) ) {
+                a  = a.replace(/type=(.*?)& explain=(.*?)($|&).*/g,'<span style="color: green;font-weight:bold;">"{$1}"</span>' +
+                ' <span style="color:#808080;">// $2</span>');
+            } else {
+                a  = '<span style="color: green;font-weight:bold;">"'+a+'"</span>';
+            }
+            return  a;
+        }
+
+        f = [];
+        for ( g in a ) {
+            if ( g == "$$hashKey" || g == "explain") continue;
+            // 值  value
+            j = a[ g ];
+            //变量名 key
+            if ( typeof j === 'object' ){
+                g = '<span style="color:rgb(122, 122, 67);">\"'+g + '\"</span>';
+            } else {
+                g = '<span style="color:rgb(102, 14, 122);font-weight:bold;">\"'+g + '\"</span>';
+            }
+
+            if ( h = [], i = ju.__repeatStr( ju.t, b ), h.push( i ),h.push( g + ju.s +':' + ju.s ),j, null == j )
+                h.push( '<span style="color:#000080;font-weight:bold;">null</span>' );
+            else if ( k = j.constructor, k == Array ) {
+                for ( h.push( "[" + ju.s  ), l = b + 2, m = [], n = 0; n < j.length; n++ )
+                    m.push( ju.__writeObj( j[ n ], l ) );
+                h.push( m.join( ju.s +',' + ju.s ) ), h.push( ju.s+"]" )
+            } else k == Function ? h.push( "[Function]" ) : h.push( ju.__writeObj( j, b + 1 ) );
+            f.push( h.join( "" ) )
+        }
+
+        return "{" + ju.n + f.join( "," + ju.n ) + ju.n + ju.__repeatStr( ju.t, b - 1 ) + "}"
+    }, __isArray: function ( a ) {
+        return a ? a.constructor == Array : !1
+    }, __repeatStr: function ( a, b ) {
+        var d, c = [];
+        if ( b > 0 )for ( d = 0; b > d; d++ )c.push( a );
+        return c.join( "" )
+    }
+};
+Util.JsonUtilApiDoc = JsonUtilApiDoc;
+
+
+
+// 测试api的参数 JSON参数格式化输出,value 只显示  default 的值
+var JsonUtilTxt = {
+    n: "\n", t: "    ", convertToString: function ( a ) {
+        return JsonUtilTxt.__writeObj( a, 1 )
+    }, __writeObj: function ( a, b, c ) {
+        var d, e, f, g, h, i, j, k, l, m, n;
+        if ( null == a )return "null";
+        if ( a.constructor == Number || a.constructor == Date || a.constructor == String || a.constructor == Boolean )return d = a.toString(), e = c ? JsonUtilTxt.__repeatStr( JsonUtilTxt.t, b - 1 ) : "", a.constructor == String || a.constructor == Date ? (function(){
+           if( /default=/.test(d) )
+               d = d.replace(/.*default=\s*/g,"");
+            else
+               d = "";
+            return e + ('"' + d + '"');
+        })() : a.constructor == Boolean ? e + d.toLowerCase() : e + d;
+        f = [];
+        for ( g in a ) {
+            if ( h = [], i = JsonUtilTxt.__repeatStr( JsonUtilTxt.t, b ), h.push( i+"\"" ), h.push( g + "\" : " ), j = a[ g ], null == j )h.push( "null" ); else if ( k = j.constructor, k == Array ) {
+                for ( h.push( i + "[" ), l = b + 2, m = [], n = 0; n < j.length; n++ )m.push( JsonUtilTxt.__writeObj( j[ n ], l, !0 ) );
+                h.push( m.join( ","  ) ), h.push( JsonUtilTxt.n + i + "]" )
+            } else k == Function ? h.push( "[Function]" ) : h.push( JsonUtilTxt.__writeObj( j, b + 1 ) );
+            f.push( h.join( "" ) )
+        }
+        return JsonUtilTxt.__repeatStr( "", b - 1 ) + "{" + JsonUtilTxt.n + f.join( "," + JsonUtilTxt.n ) + JsonUtilTxt.n + JsonUtilTxt.__repeatStr( JsonUtilTxt.t, b - 1 ) + "}"
+    }, __isArray: function ( a ) {
+        return a ? a.constructor == Array : !1
+    }, __repeatStr: function ( a, b ) {
+        var d, c = [];
+        if ( b > 0 )for ( d = 0; b > d; d++ )c.push( a );
+        return c.join( "" )
+    }
+};
+Util.JsonUtilTxt = JsonUtilTxt;
+
 
 
 //**********************************字符串模板**********************

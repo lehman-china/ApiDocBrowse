@@ -1,0 +1,24 @@
+{
+  "module": "common",
+  "moduleName": "公共通用",
+  "explain": "公共通用的一些API",
+  "apiList": [
+    {
+      "name": "快速搜索(搜索关键字提示)",
+      "url": "/api/quick_search",
+      "type": "GET",
+      "contentType": "text/plain;charset=UTF-8",
+      "param": {
+        "keyWord": "type=String& explain=关键字& default=何",
+        "typeId": "type=String& explain=搜索类型{1:宝典文章,2:医生,3:咨询问题,4:论坛帖子}& default=1"
+      },
+      "result": {
+        "state": "type=String& explain=状态码,0表示成功",
+        "message": "type=String& explain=返回消息",
+        "data": {
+          "__explain": "关键字提示 数组"
+        }
+      }
+    }
+  ]
+}

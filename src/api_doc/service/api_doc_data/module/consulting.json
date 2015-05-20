@@ -1,0 +1,53 @@
+{
+  "module": "consulting",
+  "moduleName": "咨询相关",
+  "explain": "咨询相关",
+  "apiList": [
+    {
+      "name": "名医面对面 列表",
+      "url": "/api/consulting/doctorList",
+      "type": "GET",
+      "contentType": "text/plain;charset=UTF-8",
+      "param": {
+        "page": "type=String& explain=页码& default=1",
+        "pageSize": "type=String& explain=一页显示的条数& default=10"
+      },
+      "result": {
+        "state": "type=String& explain=状态码,0表示成功",
+        "message": "type=String& explain=返回消息",
+        "data": {
+          "doctorId": "type=String& explain=医生ID",
+          "name": "type=String& explain=医生名称",
+          "avatarUrl": "type=String& explain=头像Url",
+          "focusCount": "type=String& explain=粉丝数量",
+          "intro": "type=String& explain=简介",
+          "position": "type=String& explain=职称",
+          "online": "type=String& explain=是否在线",
+          "consultingUrl": "type=String& explain=咨询的url"
+        }
+      }
+    },{
+      "name": "医生详情",
+      "url": "/api/consulting/doctorDetail",
+      "type": "GET",
+      "contentType": "text/plain;charset=UTF-8",
+      "param": {
+        "doctorId": "type=String& explain=医生ID& default=00014c5a7796f11f"
+      },
+      "result": {
+        "state": "type=String& explain=状态码,0表示成功",
+        "message": "type=String& explain=返回消息",
+        "data": {
+          "doctorId": "type=String& explain=医生ID",
+          "name": "type=String& explain=医生名称",
+          "avatarUrl": "type=String& explain=头像Url",
+          "focusCount": "type=String& explain=粉丝数量",
+          "intro": "type=String& explain=简介",
+          "position": "type=String& explain=职称",
+          "online": "type=String& explain=是否在线",
+          "consultingUrl": "type=String& explain=咨询的url"
+        }
+      }
+    }
+  ]
+}
