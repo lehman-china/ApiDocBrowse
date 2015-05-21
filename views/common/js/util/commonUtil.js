@@ -85,7 +85,7 @@ Util.getRandomNum = function ( Min, Max ) {
 };
 
 // MD5 tool
-//Util.toMD5 = MD5.hex_md5;
+Util.toMD5 = MD5.hex_md5;
 
 /** ************************************************************************************ */
 

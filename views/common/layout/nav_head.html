@@ -1,13 +1,11 @@
 <div class="masthead">
-
     <div class="container">
         <a class="nav-item fl" href="#">
             深圳前海长阳云智健康管理有限公司
         </a>
-        <a class="nav-item fl active" href="/">首页</a>
-        <a class="nav-item fl" href="/api_doc_center.html">文档中心</a>
-        <a class="nav-item fl" href="/api_list.html">API</a>
-        <a class="nav-item fr" href="#">搜索</a>
-
+        <a class="nav-item fl ${'active' if headItem=='api' else '' }" href="/">首页</a>
+        <a class="nav-item fl ${'active' if headItem=='api_doc_center' else '' }" href="/api_doc/api_doc_center.html">文档中心</a>
+        <a class="nav-item fl" href="/">API</a>
+        <a class="nav-item fr" href="/">搜索</a>
     </div>
 </div>

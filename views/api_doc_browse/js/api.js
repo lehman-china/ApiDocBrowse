@@ -116,7 +116,7 @@ require( [ "layer", "angular", "commonUtil", "bootstrap" ], function ( layer ) {
             }
             var apiTestTime = new Date();
             Util.ajax( {
-                url: "/testApi2.ajax",
+                url: "/testApi.ajax",
                 data: {
                     param: JSON.stringify( $scope.view.apiTest )
                 },
@@ -159,7 +159,7 @@ require( [ "layer", "angular", "commonUtil", "bootstrap" ], function ( layer ) {
         $scope.simuLogin = function () {
             var param = {
                 url: $scope.domain + "/api/login",
-                headers: {},
+                headers: {"Content-Type": "text/plain;charset=UTF-8"},
                 type: "POST",
                 contentType: "text/plain",
                 param: {
@@ -170,7 +170,7 @@ require( [ "layer", "angular", "commonUtil", "bootstrap" ], function ( layer ) {
             };
             param = JSON.stringify( param );
             Util.ajax( {
-                url: "/testApi2.ajax",
+                url: "/testApi.ajax",
                 data: {
                     param: param
                 },

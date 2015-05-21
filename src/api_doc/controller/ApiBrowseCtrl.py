@@ -1,29 +1,41 @@
 import glob
 import os
 import re
-import urllib
+
+import urllib.request
+import urllib.parse
+
 from lib.bottle import template, request
 from src import app
 
 import json
 import http
 
-@app.route('/', method='GET')
-def index():
-    return template('api_doc_browse/home.html')
+# 首页
+@app.route( '/', method = 'GET' )
+@app.route( '/api.html', method = 'GET' )
+def index( ):
+    return template( 'api_doc_browse/home.html' )
 
-@app.route('/api.html', method='GET')
-def intoApi():
-    dataFiles = glob.glob(os.path.dirname(__file__) + "/../service/api_doc_data/module/*.json")
+# API浏览
+@app.route( '/api_doc/api.html', method = 'GET' )
+def intoApi( ):
+    dataFiles = glob.glob( os.path.dirname( __file__ ) + "/../service/api_doc_data/module/*.json" )
     jsons = []
     for dataFile in dataFiles:
-        file = open(dataFile,encoding='utf-8')
-        jsons.append(file.read() )
-        file.close()
-    return template('api_doc_browse/api.html',{"allApiJSON":"["+ (','.join(jsons)) +"]"})
+        file = open( dataFile, encoding = 'utf-8' )
+        jsons.append( file.read( ) )
+        file.close( )
+    return template( 'api_doc_browse/api.html', { "allApiJSON": "[" + (','.join( jsons )) + "]" } )
 
-@app.route('/testApi2.ajax', method='POST')
-def testApiPOST():
+# 文档中心
+@app.route( '/api_doc/api_doc_center.html', method = 'GET' )
+def intoApiDocCenter( ):
+    return template( 'api_doc_browse/api_doc_center.html' )
+
+
+@app.route( '/testApi.ajax', method = 'POST' )
+def testApiPOST( ):
     param = json.loads( request.params.param )
     options = {
         "url": param["url"],
@@ -31,35 +43,25 @@ def testApiPOST():
         "headers": param["headers"],
         "param": param["param"]
     }
-    httpRequest( options )
-
-    return "/testApi.ajax OK " + json.dumps( options )
-
-@app.route('/testApiGet.ajax', method='GET')
-def testApiGET():
-    return "/testApiGet.ajax" + request.query['name']
-
-
-
-
-def post(url ,data ):
-    data = urllib.parse.urlencode(data).encode('utf-8')
-    request = urllib.request.Request(url,method='POST')
-    request.add_header("Content-Type","application/x-www-form-urlencoded;charset=utf-8")
-    f = urllib.request.urlopen(request,data)
-    return f.read().decode('utf-8')
-
+    res = httpRequest( options )
+    return json.dumps( { "content": res } )
 
 
 def httpRequest( param ):
-    postData = ""
-    isJson = re.compile(r'urlencoded|json').match( param["headers"]["Content-Type"] )
-    if ( param["method"] == "POST" and isJson != None ):
-        postData = urllib.parse.urlencode( param["param"] ).encode('utf-8')
-    else:
-        uu = (re.compile(r'\?').match( param["url"] ) != None) and "&" or "?"
-        # param["url"] = param["url"] + uu  + urllib.parse.urlencode( param["param"] ).encode('utf-8')
+    postData = bytes( )
+    isJson = re.search( r'urlencoded|json', param["headers"]["Content-Type"] )
+    if param["method"] == "POST" and isJson:
+        postData = urllib.parse.urlencode( param["param"] ).encode( 'utf-8' )
+    elif param["param"].__len__( ):
+        uu = re.search( r'\?', param["url"] ) and "&" or "?"
+        param["url"] = param["url"] + uu + urllib.parse.urlencode( param["param"] ).encode( 'utf-8' ).decode( )
+    request = urllib.request.Request( param["url"], method = param["method"] )
+    # 设置头信息
+    for (k, v) in param["headers"].items( ):
+        request.add_header( k, v )
+    request.add_header( 'Content-Length', str( postData.__len__( ) ) )
+    f = urllib.request.urlopen( request, postData )
+    return f.read( ).decode( 'utf-8' )
 
 
-    post(param.url ,postData )
 

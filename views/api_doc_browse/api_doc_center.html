@@ -1,15 +1,20 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <% include common/template/public_head.html %>
-    <title>文档中心</title>
-    <link rel="stylesheet" type="text/css" href="/css/api.css">
-    <script src="js/apiDocCenter.js" type="text/javascript"></script>
-</head>
-<body ng-controller="apiDocCenterCtrl">
-<% include common/template/nav_head.html %>
+    % include('common/layout/public_head.html')
+    <title>API详情</title>
+    <link rel="stylesheet" type="text/css" href="/api_doc_browse/css/api.css">
 
-<div class="container">
+    <script>
+        var g_view = g_view || {};
+
+    </script>
+    <script src="/api_doc_browse/js/api.js" type="text/javascript"></script>
+</head>
+<body ng-controller="apiCtrl">
+    % include('common/layout/nav_head.html',headItem='api_doc_center')
+
+    <div class="container">
 
     <ul class="breadcrumb" style="background-color: white;margin-top: 10px;margin-bottom: 10px;">
         <li>
@@ -143,9 +148,8 @@ private Object data = "";
     </div><!-- /.row -->
 
 </div><!-- /.container -->
-<% include common/template/nav_bottom.html %>
 
-
+    % include('common/layout/nav_bottom.html')
 
 </body>
 </html>

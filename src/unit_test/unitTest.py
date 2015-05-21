@@ -14,20 +14,33 @@ import re
 def get( url ):
     request = urllib.request.Request(url ,method='GET')
     request.add_header("Content-Type","text/plain;charset=utf-8")
+
     f = urllib.request.urlopen(request)
-    return f.read().decode('utf-8')
+    res = f.read().decode('utf-8')
+    return res
 
 #print( get("http://127.0.0.1:5000/testApiGet.ajax?name=lehman13123") )
-url = 'http://127.0.0.1:5000/testApi.ajax'
-data = {'name': 'Lehman POST------POSTPOSTPOST'}
+
 def post(url ,data ):
     data = urllib.parse.urlencode(data).encode('utf-8')
     request = urllib.request.Request(url,method='POST')
     request.add_header("Content-Type","application/x-www-form-urlencoded;charset=utf-8")
     f = urllib.request.urlopen(request,data)
     return f.read().decode('utf-8')
+url = 'http://192.168.1.100:8080/api/user/get_info'
+data = {'name': 'Lehman POST------POSTPOSTPOST','name2': 'Lehman POST------POSTPOSTPOST2'}
+# print( get(url) )
 
-print( post(url,data) )
+# 将正则表达式编译成Pattern对象
+
+
+# 使用Pattern匹配文本，获得匹配结果，无法匹配时将返回None
+m = re.search( r'urlencoded|json' ,"application/x-www-form-js2on;charset=utf-8" )
+
+print( {}.__len__() )
+#print(get("http://192.168.1.100:8080/api/user/get_info"))
+
+
 
 def httpRequest( param ):
     postData = ""
