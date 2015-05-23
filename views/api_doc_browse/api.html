@@ -34,7 +34,7 @@
                         API 目录&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
                         <ul class="ul-hover-style text-right">
-                            <li class="hover-unfold" ng-repeat="module in view.allApi" ng-click="selApiCatalog($index)">
+                            <li class="hover-unfold" ng-class="{active:api_catalog_inx==$index}" ng-repeat="module in view.allApi" ng-click="selApiCatalog($index)">
                                 <a href="javascript:">{{module.moduleName}}</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                 <!--子层  用于预览api分类下的 api -->
                                 <ul >
@@ -51,7 +51,7 @@
                     </div>
 
                     <ul class="nav-left" style="padding-left: 0px;">
-                        <li class="text-right" ng-class="{active:view.curApi.name==api.name}" ng-repeat="api in view.allApi[ api_catalog_inx ].apiList" ng-click="selApi($index)">
+                        <li class="text-right" ng-class="{active:api_inx==$index}" ng-repeat="api in view.allApi[ api_catalog_inx ].apiList" ng-click="selApi($index)">
                             <abbr title="{{api.name}}">
                                 <h5 class="link" style="margin-top: 5px;margin-bottom: 5px;">{{api.url}}</h5>
                                 <h5 style="margin-top: 5px;margin-bottom: 5px;">{{api.name}}</h5>

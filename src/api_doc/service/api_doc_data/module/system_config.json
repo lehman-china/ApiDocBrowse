@@ -24,7 +24,7 @@
       "url": "/api/sys/init_config",
       "type": "GET",
       "contentType": "text/plain;charset=UTF-8",
-      "param": null,
+      "param": {},
       "result": {
         "state": "type=String& explain=状态码,0表示成功",
         "message": "type=String& explain=返回消息",

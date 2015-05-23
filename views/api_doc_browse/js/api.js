@@ -39,10 +39,6 @@ require( [ "layer", "angular", "commonUtil", "bootstrap" ], function ( layer ) {
 
         $scope.domain = "http://192.168.1.100:8080";
 
-
-        $scope.view.curApi = null;
-
-
         // 请求头的展示,与数据同步
         $scope.getRequestHeaders = function () {
             var requestHeaders = {
@@ -55,6 +51,7 @@ require( [ "layer", "angular", "commonUtil", "bootstrap" ], function ( layer ) {
 
         // ***********************************选中 api 目录和api*********************************************
         // 当前选中api 索引
+        $scope.view.curApi = null;
         $scope.api_catalog_inx = parseInt( /api_catalog_inx=(\d)&/.exec( location.href )[ 1 ] );
         $scope.api_inx = parseInt( /api_inx=(\d)/.exec( location.href )[ 1 ] );
 
@@ -94,7 +91,7 @@ require( [ "layer", "angular", "commonUtil", "bootstrap" ], function ( layer ) {
 
         //region ****************************测试 api 接口*****************************
         $scope.TYPE_LIST = [ "GET", "POST", "PUT" ];
-        $scope.CONTENT_TYPE_LIST = [ "text/plain;charset=UTF-8", "application/json;charset=UTF-8", "application/x-www-form-urlencoded;charset=UTF-8" ];
+        $scope.CONTENT_TYPE_LIST = [ "text/plain;charset=UTF-8", "application/json;charset=UTF-8", "application/x-www-form-urlencoded;charset=UTF-8","text/javascript;charset=UTF-8" ];
         $scope.form.contentType = "text/plain";
         $scope.form.Cookie = "";// 用于模拟App登录的
         $scope.form.requestParams = {};

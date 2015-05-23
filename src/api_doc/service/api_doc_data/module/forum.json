@@ -73,7 +73,7 @@
           "userId": "type=String& explain=楼主userId",
           "userName": "type=String& explain=楼主userName",
           "content": "type=String& explain=楼主发的内容",
-          "replys": "type=String& explain=回复区,属性如上雷同,childReplys 2级回复"
+          "replys": "type=Array& explain=回复区,属性如上雷同,childReplys 2级回复"
         }
       }
     },

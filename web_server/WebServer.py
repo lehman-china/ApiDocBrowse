@@ -1,6 +1,4 @@
-proPath =  "D:/Users/Desktop/Project/python/ApiDocBrowse"
-staticPath =  "D:/Users/Desktop/Project/python/ApiDocBrowse/views/include/"
-templatePath =  "D:/Users/Desktop/Project/python/ApiDocBrowse/views/templatePath/"
+
 
 import os
 

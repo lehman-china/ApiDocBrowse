@@ -71,39 +71,6 @@
         "data": {
         }
       }
-    },
-    {
-      "name": "收藏,宝典文章/论坛帖子",
-      "url": "/api/personal/favorite",
-      "type": "GET",
-      "contentType": "text/plain;charset=UTF-8",
-      "param": {
-        "favoriteType": "type=String& explain=收藏的类型,宝典=FAVORITE_INFORMATION ,贴子=FAVORITE_ARTICLE& default=FAVORITE_ARTICLE",
-        "ownerId": "type=String& explain=被收藏数据ID,可以是资讯的ID,也可以是社区话题的ID& default=00014c6fe52ac300",
-        "isCancel": "type=String& explain=是否取消收藏,字符串形式的:true/false& default=false"
-      },
-      "result": {
-        "state": "type=String& explain=状态码,0表示成功",
-        "message": "type=String& explain=返回消息",
-        "data": {
-        }
-      }
-    },
-    {
-      "name": "医生关注,取消关注",
-      "url": "/api/personal/doctorFocus",
-      "type": "GET",
-      "contentType": "text/plain;charset=UTF-8",
-      "param": {
-        "doctorOpenId": "type=String& explain=医生的openId& default=00014c5a7796f11f",
-        "isFocus": "type=String& explain=是否关注 (1=关注,0=取消关注)& default=1"
-      },
-      "result": {
-        "state": "type=String& explain=状态码,0表示成功",
-        "message": "type=String& explain=返回消息",
-        "data": {
-        }
-      }
     }
   ]
 }

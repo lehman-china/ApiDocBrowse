@@ -15,7 +15,7 @@
     background-color: #D8E5F4;
 }
 
-.nav-left li.active {
+.active {
     font-weight: bold;
     background-color: #D8E5F4;
 }
@@ -34,6 +34,8 @@
 .hover-unfold:hover > ul{
     display:inline-block;
 }
+
+
 
 /* ul li hover style */
 .ul-hover-style > li {
