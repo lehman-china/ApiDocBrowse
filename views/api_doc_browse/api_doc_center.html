@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-    % include('common/layout/public_head.html')
+    {% include '../common/layout/public_head.html' %}
     <title>相关信息</title>
     <link rel="stylesheet" type="text/css" href="/api_doc_browse/css/api.css">
 
     <script>
         var g_view = g_view || {};
     </script>
-    <script src="/api_doc_browse/js/api.js" type="text/javascript"></script>
+    <script src="/api_doc_browse/js/apiDocCenter.js" type="text/javascript"></script>
 </head>
-<body ng-controller="apiCtrl">
-    % include('common/layout/nav_head.html',headItem='api_doc_center')
+<body ng-controller="apiDocCenterCtrl">
+    {% include '../common/layout/nav_head.html' {"apiDocCenterItem":"true"} %}
 
     <div class="container">
 
@@ -137,7 +137,7 @@ private Object data = "";
 
 </div><!-- /.container -->
 
-    % include('common/layout/nav_bottom.html')
+    {% include '../common/layout/nav_bottom.html' %}
 
 </body>
 </html>
