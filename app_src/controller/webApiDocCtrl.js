@@ -7,7 +7,7 @@ var commonConst = require( "../common/commonConst" );
 var commonUtil = require( "../common/util/commonUtil" );
 
 router.get( [ "/", "index.html","home.html" ], function ( req, res, next ) {
-    res.render('api_doc_browse/home', {name:"lehman113"});
+    res.render('api_doc_browse/home');
 } );
 
 

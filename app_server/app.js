@@ -13,7 +13,7 @@ var app = express();
 var swig = require( 'swig' );
 // view engine setup
 //设置模板目录
-app.set( 'views', path.join( __dirname, '../../views' ) );
+app.set( 'views', path.join( __dirname, '../views' ) );
 //设置模板引擎
 app.set( 'view engine', 'html' );
 //设置引擎后缀.  index.html 中的内容可以是 模板 代码
@@ -43,7 +43,7 @@ app.use( session( {
 var application = {};// 模拟 application
 
 //************************************************
-var projectPath = path.join( __dirname, "../../" );
+var projectPath = path.join( __dirname, "../" );
 // 拦截器(拦截器需在路由前),session 放入所有页面,让ejs 直接访问session
 app.use( function ( req, res, next ) {
     // 项目的路径
@@ -58,7 +58,7 @@ app.use( function ( req, res, next ) {
 
 
 // 配置所有的一级路由
-var ctrlsPath = path.join( __dirname, '../../app_src/controller/' );
+var ctrlsPath = path.join( __dirname, '../app_src/controller/' );
 fs.readdirSync( ctrlsPath ).forEach( function ( file ) {
     var ctrl = ctrlsPath + file.toString().replace( ".js", "" );
     console.log( "载入控制器:" + ctrl );
