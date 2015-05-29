@@ -53,7 +53,7 @@
       "type": "GET",
       "contentType": "text/plain;charset=UTF-8",
       "param": {
-        "forumId": "type=String& explain=帖子ID& default=00014d36c057ff03",
+        "forumId": "type=String& explain=帖子ID& default=00014d9063c72347",
         "pageSize": "type=String& explain=控制回复显示的数量,可不传,默认16& default=16"
       },
       "result": {
@@ -62,6 +62,7 @@
         "data": {
           "forumId": "type=String& explain=帖子ID",
           "forumTypeName": "type=String& explain=所属帖子的分类名称",
+          "imgUrlList": "type=String& explain=贴子的图片集Url",
           "avatarUrl": "type=String& explain=头像Url",
           "replyCount": "type=Integer& explain=回复数统计(一级回复)",
           "praiseCount": "type=Integer& explain=点赞数统计",
@@ -90,13 +91,14 @@
       "result": {
         "state": "type=String& explain=状态码,0表示成功",
         "message": "type=String& explain=返回消息",
-        "data": {
+        "data": [{
+          "replyId": "type=String& explain=回复Id",
           "openId": "type=String& explain=回复者openId",
           "userId": "type=String& explain=回复者userId",
           "userName": "type=String& explain=回复者userName",
           "content": "type=String& explain=回复的内容",
           "childReplys": "type=String& explain=2级回复,属性如上雷同;"
-        }
+        }]
       }
     },
     {
@@ -119,7 +121,7 @@
     },
     {
       "name": "回复帖子",
-      "url": "/api/forum/reply",
+      "url": "/api/forum/article/reply",
       "type": "POST",
       "contentType": "application/x-www-form-urlencoded;charset=UTF-8",
       "param": {
@@ -131,7 +133,13 @@
       "result": {
         "state": "type=String& explain=状态码,0表示成功",
         "message": "type=String& explain=返回消息",
-        "data": "type=String& explain=刚刚回复的ID"
+        "data": {
+          "replyId": "type=String& explain=回复Id",
+          "openId": "type=String& explain=回复者openId",
+          "userId": "type=String& explain=回复者userId",
+          "userName": "type=String& explain=回复者userName",
+          "content": "type=String& explain=回复的内容"
+        }
       }
     },
     {

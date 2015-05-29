@@ -19,11 +19,11 @@ app.set( 'view engine', 'html' );
 //设置引擎后缀.  index.html 中的内容可以是 模板 代码
 app.engine( '.html', swig.renderFile );
 // 模板的一些默认设置
-swig.setDefaults({
-    cache: false,
+swig.setDefaults( {
+    cache: false,// 不缓存模板,不然每次改页面都得重启webserver
     autoescape: false,//输出不转义为html
-    varControls: ['${{', '}}']
-});
+    varControls: [ '${{', '}}' ] // 修改默认变量输出标签,避免和angular标签冲突
+} );
 
 
 // uncomment after placing your favicon in /public
@@ -50,7 +50,6 @@ app.use( function ( req, res, next ) {
     res.locals.path = projectPath;
 
     res.locals.session = req.session;
-    req.session.application = application;
     res.locals.application = application;
 
     next();
@@ -72,30 +71,16 @@ app.use( function ( req, res, next ) {
     err.status = 404;
     next( err );
 } );
-
 //错误页面 error handlers
-
-// development error handler
-// will print stacktrace
-if ( app.get( 'env' ) === 'development' ) {
-    app.use( function ( err, req, res, next ) {
-        res.status( err.status || 500 );
-        res.render( 'error', {
-            message: err.message,
-            error: err
-        } );
-    } );
-}
-
-// production error handler
-// no stacktraces leaked to user
+// 是否是开发阶段
+var isDevelopment = app.get( 'env' ) === 'development';
 app.use( function ( err, req, res, next ) {
     res.status( err.status || 500 );
     res.render( 'error', {
         message: err.message,
-        error: {}
+        // 是否是开发阶段,是否打印堆栈信息
+        error: isDevelopment ? err : {}
     } );
 } );
-
 
 module.exports = app;

@@ -72,7 +72,8 @@
                         <botton class="btn btn-info simulate-login-btn" >模拟APP登录保持会话</botton>
                         <span ng-html="view.simuLoginUser"></span><br/>
                         -------------------域名设置---------------------
-                        <input class="form-control" type="text" ng-model="domain" placeholder="域名">
+                        <select class="form-control" ng-model="domain" ng-options="dm as dm for dm in domainList">
+                        </select>
                     </div>
                 </div>
 
@@ -165,9 +166,6 @@
                         </form>
                     </div>
                 </div>
-
-
-
 
 
             </div><!-- /.sidebar -->

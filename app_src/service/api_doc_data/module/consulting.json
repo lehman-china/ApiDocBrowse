@@ -26,7 +26,8 @@
           "consultingUrl": "type=String& explain=咨询的url"
         }
       }
-    },{
+    },
+    {
       "name": "医生详情",
       "url": "/api/consulting/doctorDetail",
       "type": "GET",
@@ -46,6 +47,107 @@
           "position": "type=String& explain=职称",
           "online": "type=String& explain=是否在线",
           "consultingUrl": "type=String& explain=咨询的url"
+        }
+      }
+    },
+    {
+      "name": "读取咨询聊天记录",
+      "url": "/api/consulting/message/chatHistory",
+      "type": "GET",
+      "contentType": "text/plain;charset=UTF-8",
+      "param": {
+        "pageNumber": "type=String& explain=页码& default=1",
+        "pageSize": "type=String& explain==一页显示的条数& default=10",
+        "tempMessageId": "type=String& explain=聊天消息ID& default=00014d95114adc02"
+      },
+      "result": {
+        "state": "type=String& explain=状态码,0表示成功",
+        "message": "type=String& explain=返回消息",
+        "data": {
+          "displayTime" : "type=Boolean& explain=是否显示时间",
+          "avatarUrl" : "type=String& explain=头像Url,医生才有",
+          "sideFlag" : "type=Boolean& explain=是否是医生的回复",
+          "message" : "type=String& explain=消息",
+          "userName" : "type=String& explain=显示的名称",
+          "createDate" : "type=String& explain=消息发送时间"
+        }
+      }
+    },
+    {
+      "name": "发送咨询消息(有说明)",
+      "explain": "1. 先调用此接口发送消息(数据库储存数据).\n2. 调用WebSocket,发送内容:tempMessageId(通知服务器转发消息)",
+      "url": "/api/consulting/submit",
+      "type": "POST",
+      "contentType": "application/x-www-form-urlencoded;charset=UTF-8",
+      "param": {
+        "message": "type=String& explain=发送的消息& default=测试App咨询消息.",
+        "tempMessageId": "type=String& explain=聊天消息ID& default=00014d95114adc02",
+        "doctorId": "type=String& explain=医生ID& default=00014c5697a16e07",
+        "processId": "type=String& explain=受理者ID& default=00014c5697a16e07",
+        "subjectType": "type=String& explain=咨询消息的类型& default=PUBLIC"
+      },
+      "result": {
+        "state": "type=String& explain=状态码,0表示成功",
+        "message": "type=String& explain=返回消息",
+        "data": {
+        }
+      }
+    },
+    {
+      "name": "服务器回复消息说明(不是接口)",
+      "url": "无URL",
+      "type": "GET",
+      "contentType": "application/x-www-form-urlencoded;charset=UTF-8",
+      "param": {
+      },
+      "result": {
+        "state": "type=String& explain=状态码,0表示成功",
+        "message": "type=String& explain=返回消息",
+        "data": {
+          "avatarUrl": "type=String& explain=医生头像url",
+          "message": "type=String& explain=消息",
+          "displayTime": "type=String& explain=是否显示时间",
+          "createDate": "type=String& explain=发送消息时间"
+        }
+      }
+    },
+    {
+      "name": "进入快速咨询",
+      "url": "/api/consulting/fastConsulting",
+      "type": "GET",
+      "contentType": "text/plain;charset=UTF-8",
+      "param": {
+      },
+      "result": {
+        "state": "type=String& explain=状态码,0表示成功",
+        "message": "type=String& explain=返回消息",
+        "data": {
+          "doctorName": "type=String& explain=医生名称",
+          "processId": "type=String& explain=受理之ID",
+          "doctorId": "type=String& explain=医生ID",
+          "tempMessageId": "type=String& explain=消息ID",
+          "webSocketUrl": "type=String& explain=webSocket连接Url",
+          "subjectType": "type=String& explain=快速咨询或面对面咨询类型"
+        }
+      }
+    },
+    {
+      "name": "进入面对面咨询",
+      "url": "/api/consulting/soloConsulting",
+      "type": "GET",
+      "contentType": "text/plain;charset=UTF-8",
+      "param": {
+        "doctorId": "type=String& explain=医生ID& default=00014c5697a16e07"
+      },
+      "result": {
+        "state": "type=String& explain=状态码,0表示成功",
+        "message": "type=String& explain=返回消息",
+        "data": {
+          "processId": "type=String& explain=受理之ID",
+          "doctorId": "type=String& explain=医生ID",
+          "tempMessageId": "type=String& explain=消息ID",
+          "webSocketUrl": "type=String& explain=webSocket连接Url",
+          "subjectType": "type=String& explain=快速咨询或面对面咨询类型"
         }
       }
     }
