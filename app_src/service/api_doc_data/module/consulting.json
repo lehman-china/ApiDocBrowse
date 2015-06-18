@@ -58,7 +58,7 @@
       "param": {
         "pageNumber": "type=String& explain=页码& default=1",
         "pageSize": "type=String& explain==一页显示的条数& default=10",
-        "tempMessageId": "type=String& explain=聊天消息ID& default=00014d95114adc02"
+        "tempMessageId": "type=String& explain=聊天消息ID& default=00014ddc70b5ffe6"
       },
       "result": {
         "state": "type=String& explain=状态码,0表示成功",
@@ -67,6 +67,7 @@
           "displayTime" : "type=Boolean& explain=是否显示时间",
           "avatarUrl" : "type=String& explain=头像Url,医生才有",
           "sideFlag" : "type=Boolean& explain=是否是医生的回复",
+          "messageType": "type=String& explain=消息类型TEXT=文本,VIDEO=视频语音,PHOTO=图片& default=TEXT",
           "message" : "type=String& explain=消息",
           "userName" : "type=String& explain=显示的名称",
           "createDate" : "type=String& explain=消息发送时间"
@@ -75,39 +76,22 @@
     },
     {
       "name": "发送咨询消息(有说明)",
-      "explain": "1. 先调用此接口发送消息(数据库储存数据).\n2. 调用WebSocket,发送内容:tempMessageId(通知服务器转发消息)",
+      "explain": "1. 先调用此接口发送消息(数据库储存数据).\n  1.1.发送图片\n    1.1.1.把用户发送的图片压缩为400最长边,保持原比例,控制在512kb以下(减轻服务器,网络负担);\n    1.1.2.把图片数据转换为base64编码\n2. 调用WebSocket,发送内容:tempMessageId(通知服务器转发消息)",
       "url": "/api/consulting/submit",
       "type": "POST",
       "contentType": "application/x-www-form-urlencoded;charset=UTF-8",
       "param": {
-        "message": "type=String& explain=发送的消息& default=测试App咨询消息.",
-        "tempMessageId": "type=String& explain=聊天消息ID& default=00014d95114adc02",
-        "doctorId": "type=String& explain=医生ID& default=00014c5697a16e07",
-        "processId": "type=String& explain=受理者ID& default=00014c5697a16e07",
-        "subjectType": "type=String& explain=咨询消息的类型& default=PUBLIC"
+        "messageType": "type=String& explain=消息类型TEXT=文本,VIDEO=视频语音,PHOTO=图片& default=TEXT",
+        "message": "type=String& explain=消息,消息类型TEXT=文本消息,PHOTO=图片Base64数据& default=测试App咨询消息.",
+        "tempMessageId": "type=String& explain=聊天消息ID& default=00014ddc70b5ffe6",
+        "doctorId": "type=String& explain=医生ID& default=00014c5694097904",
+        "processId": "type=String& explain=受理者ID& default=00014c5694097904",
+        "subjectType": "type=String& explain=咨询消息的类型PUBLIC=快速咨询,PRIVATE=面对面咨询& default=PRIVATE"
       },
       "result": {
         "state": "type=String& explain=状态码,0表示成功",
         "message": "type=String& explain=返回消息",
         "data": {
-        }
-      }
-    },
-    {
-      "name": "服务器回复消息说明(不是接口)",
-      "url": "无URL",
-      "type": "GET",
-      "contentType": "application/x-www-form-urlencoded;charset=UTF-8",
-      "param": {
-      },
-      "result": {
-        "state": "type=String& explain=状态码,0表示成功",
-        "message": "type=String& explain=返回消息",
-        "data": {
-          "avatarUrl": "type=String& explain=医生头像url",
-          "message": "type=String& explain=消息",
-          "displayTime": "type=String& explain=是否显示时间",
-          "createDate": "type=String& explain=发送消息时间"
         }
       }
     },

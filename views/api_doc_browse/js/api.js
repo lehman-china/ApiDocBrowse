@@ -38,7 +38,7 @@ require( [ "layer", "angular", "commonUtil", "bootstrap" ], function ( layer ) {
         $scope.form = {}; // 一些提交的数据分类
         // 域名
         $scope.domain = "http://192.168.1.100:8080";
-        $scope.domainList = ["http://192.168.1.100:8080","http://www.myymjk.com/","http://www.tsymjk.com/"];
+        $scope.domainList = ["http://192.168.1.100:8080","http://www.myymjk.com/","http://test.cyyz-health.com/","http://www.tsymjk.com/"];
 
         // 请求头的展示,与数据同步
         $scope.getRequestHeaders = function () {

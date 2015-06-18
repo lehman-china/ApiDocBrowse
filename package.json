@@ -1,5 +1,5 @@
 {
-  "name": "node_web_api_doc",
+  "name": "web_api_doc",
   "version": "0.0.0",
   "private": true,
   "author": "leijianjun",
@@ -14,6 +14,7 @@
     "express": "~4.12.4",
     "express-session": "^1.11.2",
     "morgan": "~1.5.1",
+    "orm": "^2.1.26",
     "serve-favicon": "~2.2.0",
     "sqlite3": "https://github.com/mapbox/node-sqlite3/tarball/master",
     "swig": "^1.4.2"

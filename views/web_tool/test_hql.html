@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% include '../common/layout/public_head.html' %}
+    <title>测试hql</title>
+    <link rel="stylesheet" type="text/css" href="/api_doc_browse/css/api.css">
+
+    <script>
+        var g_view = g_view || {};
+    </script>
+    <script src="/web_tool/js/testHql.js" type="text/javascript"></script>
+</head>
+<body ng-controller="apiCtrl">
+{% include '../common/layout/nav_head.html' {"webToolItem":"true"} %}
+
+<div class="container">
+
+    <ul class="breadcrumb" style="background-color: white;margin-top: 10px;margin-bottom: 10px;">
+        <li>
+            <a href="/">主页</a>
+        </li>
+        <li class="active">
+            相关信息
+        </li>
+    </ul>
+    <div class="line"></div>
+    <br>
+    <div class="row">
+
+        <!-- /.main -->
+        <!-- 正文 -->
+        <div class="col-sm-12">
+            <div class="panel panel-info">
+                <div class="panel-heading">测试hql或sql:</div>
+                <div class="panel-body form-horizontal">
+                    <div class="form-group" style="padding-left: 25px;">
+                        <label class="col-sm-1 control-label" style="padding-left: 0px;padding-right: 0px;">域名:</label>
+                        <div class="col-sm-3" style="padding-left: 0px;padding-right: 0px;">
+                            <select class="form-control" ng-model="domain" ng-options="dm as dm for dm in domainList">
+                            </select>
+                        </div>
+                        <label class="col-sm-1 control-label" style="padding-left: 0px;padding-right: 0px;">方式:</label>
+                        <div class="col-sm-2" style="padding-left: 0px;padding-right: 0px;">
+                            <select class="form-control" ng-model="view.apiTest.queryType" ng-options="queryType as queryType for queryType in ['query','update']">
+                            </select>
+                        </div>
+                        <label class="col-sm-1 control-label" style="padding-left: 0px;padding-right: 0px;">类型:</label>
+                        <div class="col-sm-1" style="padding-left: 0px;padding-right: 0px;">
+                            <select class="form-control" ng-model="view.apiTest.testType"
+                                    ng-options="testType as testType for testType in ['hql','sql']"
+                                    >
+                            </select>
+                        </div>
+                        <label class="col-sm-1 control-label" style="padding-left: 0px;padding-right: 0px;">通行码:</label>
+                        <div class="col-sm-2" style="padding-left: 0px;padding-right: 0px;">
+                            <input class="form-control" ng-model="view.apiTest.passCode" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">测试语句:</label>
+                        <div class="col-sm-10">
+                            <textarea class="form-control" style="height:60px;" id="tset-hql">from Feedback</textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-6 control-label" >测试请求总耗时:{{view.apiTestTime}}ms</label>
+                        <div class="col-sm-2">
+                            <button ng-click="testApi()" class="btn btn-success">测试</button>
+                        </div>
+                        <div class="col-sm-4"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" >请求结果:</label>
+                        <div class="col-sm-10"  ng-test-res-html="view.apiTest.result"></div>
+                    </div>
+
+                </div>
+
+            </div>
+            </div>
+
+
+        </div><!-- /.sidebar -->
+
+    </div><!-- /.row -->
+
+</div><!-- /.container -->
+
+{% include '../common/layout/nav_bottom.html' %}
+
+</body>
+</html>

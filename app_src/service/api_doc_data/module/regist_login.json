@@ -2,17 +2,31 @@
   "module": "regist_login",
   "moduleName": "注册登录,找回密码",
   "explain": "注册登录,找回密码一些API",
-  "apiList": [
-    {
-      "name": "用户登录",
+  "apiList": [{
+      "name": "退出登陆",
+      "url": "/api/login/logout",
+      "type": "GET",
+      "contentType": "text/plain;charset=UTF-8",
+      "param": {
+      },
+      "result": {
+        "state": "type=String& explain=状态码,0表示成功,1011=第三方登陆未注册",
+        "message": "type=String& explain=返回消息",
+        "data": {
+        }
+      }
+    },{
+      "name": "APP用户登录",
       "url": "/api/login",
       "type": "POST",
       "contentType": "text/plain;charset=UTF-8",
       "param": {
         "username": "type=String& explain=用户名,不能为空& default=13266720440",
         "password": "type=String& explain=密码,MD5(32小)加密& default=f30aa7a662c728b7407c54ae6bfd27d1",
+        "pushUserId": "type=String& explain=百度推送pushUserId& default=",
+        "pushChannelId": "type=String& explain=百度推送pushChanelId& default=",
         "clientId": "type=String& explain=设备ID& default=10086",
-        "resource": "type=String& explain=不清楚,非必需",
+        "resource": "type=String& explain=设备类型 ios/android",
         "clientVersion": "type=String& explain=客户端版本号"
       },
       "result": {
@@ -25,6 +39,47 @@
           "userId": "8808b659-f9c6-4d3b-873a-d7163a279e2e",
           "token": "00014d276b1afa00"
         }
+      }
+    },{
+      "name": "第三方登录-登录",
+      "url": "/api/login/thirdParty",
+      "type": "POST",
+      "contentType": "text/plain;charset=UTF-8",
+      "param": {
+        "thirdPartyKey": "type=String& explain=第三方登陆的Key& default=13266720440",
+        "thirdPartyType": "type=String& explain=第三方登陆的类型(WEIXIN=微信登陆,QQ=qq登陆,WEIBO=新浪微博登陆)& default=QQ",
+        "pushUserId": "type=String& explain=百度推送pushUserId& default=",
+        "pushChannelId": "type=String& explain=百度推送pushChanelId& default=",
+        "clientId": "type=String& explain=设备ID& default=10086",
+        "resource": "type=String& explain=设备类型 ios/android",
+        "clientVersion": "type=String& explain=客户端版本号"
+      },
+      "result": {
+        "state": "type=String& explain=状态码,0表示成功,1011=第三方登陆未注册",
+        "message": "type=String& explain=返回消息",
+        "data": {
+          "jsessionId": "894fa12f-55bc-4ad1-9c32-7eb5337a2f5f",
+          "openId": "cyyz_leijianjun3",
+          "globalSessionTimeout": "2400000",
+          "userId": "8808b659-f9c6-4d3b-873a-d7163a279e2e",
+          "token": "00014d276b1afa00"
+        }
+      }
+    },{
+      "name": "第三方登录-注册(绑定手机号)",
+      "url": "/api/register/thirdParty",
+      "type": "GET",
+      "contentType": "text/plain;charset=UTF-8",
+      "param": {
+        "phone": "type=String& explain=绑定的手机号& default=13266720440",
+        "thirdPartyKey": "type=String& explain=第三方登陆的Key& default=13266720440",
+        "thirdPartyType": "type=String& explain=第三方登陆的类型(WEIXIN=微信登陆,QQ=qq登陆,WEIBO=新浪微博登陆)& default=QQ",
+        "captcha": "type=String& explain=手机验证码& default=888888"
+      },
+      "result": {
+        "state": "type=String& explain=状态码,0表示成功,1011=第三方登陆未注册",
+        "message": "type=String& explain=返回消息",
+        "data": null
       }
     },
     {

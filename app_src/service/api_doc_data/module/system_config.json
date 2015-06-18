@@ -15,7 +15,12 @@
         "state": "type=String& explain=状态码,0表示成功",
         "message": "type=String& explain=返回消息",
         "data": {
-          "__explain": "版本信息对象"
+            "setupUrl" : "type=String& explain=更新的Url",
+            "versionDesc" : "type=String& explain=版本说明",
+            "isForce" : "type=String& explain=是否强制更新 1=强制,0=不强制",
+            "versionName" : "type=String& explain=版本名称",
+            "minCode" : "type=String& explain=最小版本号",
+            "versionCode" : "type=String& explain=版本号"
         }
       }
     },

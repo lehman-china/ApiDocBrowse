@@ -11,7 +11,7 @@ var bodyParser = require( 'body-parser' );
 
 var app = express();
 var swig = require( 'swig' );
-// view engine setup
+//region 视图模板设置***************
 //设置模板目录
 app.set( 'views', path.join( __dirname, '../views' ) );
 //设置模板引擎
@@ -24,6 +24,7 @@ swig.setDefaults( {
     autoescape: false,//输出不转义为html
     varControls: [ '${{', '}}' ] // 修改默认变量输出标签,避免和angular标签冲突
 } );
+//endregion
 
 
 // uncomment after placing your favicon in /public
@@ -41,7 +42,6 @@ app.use( session( {
 } ) );
 
 var application = {};// 模拟 application
-
 //************************************************
 var projectPath = path.join( __dirname, "../" );
 // 拦截器(拦截器需在路由前),session 放入所有页面,让ejs 直接访问session
@@ -71,9 +71,8 @@ app.use( function ( req, res, next ) {
     err.status = 404;
     next( err );
 } );
-//错误页面 error handlers
-// 是否是开发阶段
-var isDevelopment = app.get( 'env' ) === 'development';
+//500错误页面 error handlers
+var isDevelopment = app.get( 'env' ) === 'development';// 是否是开发阶段
 app.use( function ( err, req, res, next ) {
     res.status( err.status || 500 );
     res.render( 'error', {
