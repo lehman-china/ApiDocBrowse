@@ -2,7 +2,8 @@
 // Ĭ�������ģ������Ŀ¼Ϊ��ʼĿ¼
 var baseUrl = '/common/js/';
 require.config( {
-
+    waitSeconds: 0,//禁用require的超时
+    urlArgs: "bust=" + (new Date()).getTime(),  //TODO ��ֹ��ȡ���棬���Խ׶�ʹ��
     shim: {
         "angular": {
             exports: 'angular'
@@ -44,6 +45,5 @@ require.config( {
         '*': {// require 加载css插件
             'css':  baseUrl+'inc/require/require-css/css.js' // or whatever the path to require-css is
         }
-    },
-    urlArgs: "bust=" + (new Date()).getTime()  //TODO ��ֹ��ȡ���棬���Խ׶�ʹ��
+    }
 } );

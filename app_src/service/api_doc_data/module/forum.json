@@ -103,7 +103,7 @@
     },
     {
       "name": "发帖 (有说明)",
-      "explain": "发帖步骤: \n  1.把用户上传的图片压缩,控制在512kb以下(或更小减轻服务器负担);\n  2.把图片数据转换为base64编码\n  3.调用本接口.收工,完毕. ",
+      "explain": "发帖步骤: \n  1.把用户上传的图片压缩为400最长边,控制在512kb以下(或更小减轻服务器负担);\n  2.把图片数据转换为base64编码\n  3.调用本接口.收工,完毕. ",
       "url": "/api/forum/article/send",
       "type": "POST",
       "contentType": "application/x-www-form-urlencoded;charset=UTF-8",

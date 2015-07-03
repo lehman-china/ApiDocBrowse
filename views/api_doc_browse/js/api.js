@@ -163,7 +163,8 @@ require( [ "layer", "angular", "commonUtil", "bootstrap" ], function ( layer ) {
                 param: {
                     "username": $scope.form.simuAccount,
                     "password": Util.toMD5( $scope.form.simuPassword ),
-                    "clientId": "pc-lehman-10086"
+                    "clientId": "API_TEST_CLIENT_ID",
+                    "promoteChannelKey":"API_TEST_PROMOTE_CHANNEL"
                 }
             };
             param = JSON.stringify( param );

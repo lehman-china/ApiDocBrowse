@@ -37,7 +37,7 @@
           "title" : "type=String& explain=标题",
           "externalUrl" : "type=String& explain=文章详情链接",
           "favoriteCount": "type=String& explain=收藏数",
-          "praiseCount": "type=String& explain=点赞数"
+          "praiseCount": "type=String& explain=点赞数",
         }
       }
     }, {
@@ -53,6 +53,8 @@
         "message": "type=String& explain=返回消息",
         "data": {
           "externalUrl" : "type=String& explain=文章详情链接",
+          "viewPicture" : "type=String& explain=封面图片url",
+          "content" : "type=String& explain=内容前50个字......",
           "isFavorite" : "type=Boolean& explain=是否收藏", 
           "isPraise" : "type=Boolean& explain=是否点赞" 
         }

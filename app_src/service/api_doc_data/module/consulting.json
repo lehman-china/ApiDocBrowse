@@ -45,7 +45,9 @@
           "focusCount": "type=String& explain=粉丝数量",
           "intro": "type=String& explain=简介",
           "position": "type=String& explain=职称",
-          "online": "type=String& explain=是否在线",
+          "focus": "type=Boolean& explain=是否关注",
+          "online": "type=Boolean& explain=是否在线",
+          "isPatient": "type=Boolean& explain=是否是患者(患者无法取消关注)",
           "consultingUrl": "type=String& explain=咨询的url"
         }
       }

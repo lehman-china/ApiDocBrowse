@@ -34,7 +34,23 @@
         "state": "type=String& explain=状态码,0表示成功",
         "message": "type=String& explain=返回消息",
         "data": {
-          "__explain": "系统信息对象"
+        }
+      }
+    },
+    {
+      "name": "用户操作审计日志",
+      "url": "/api/sys/operante_audit",
+      "type": "GET",
+      "contentType": "text/plain;charset=UTF-8",
+      "param": {
+          "auditTypeEnum": "type=String& explain=审计类型 INSTALL_START=安装启动,UNINSTALL=卸载& default=INSTALL_START",
+          "promoteChannelKey": "type=String& explain=推广渠道key& default=API_TEST_PROMOTE_CHANNEL",
+          "clientId": "type=String& explain=设备ID& default=test_api_client_id"
+       },
+      "result": {
+        "state": "type=String& explain=状态码,0表示成功",
+        "message": "type=String& explain=返回消息",
+        "data": {
         }
       }
     }
