@@ -32,11 +32,19 @@ function writeFile( file, content ) {
 function isDir( currentPath ){
     return !fs.lstatSync( currentPath ).isDirectory();
 }
+// 是否是文件夹
+function print( content ){
+    console.log( content );
+    writeFile( `D:\\Users\\Desktop\\console.txt`, content );
+}
+
+
 
 
 module.exports = {
     readDir : readDir,
     getDirName : getDirName,
     writeFile : writeFile,
-    isDir : isDir
+    isDir : isDir,
+    print : print
 };
