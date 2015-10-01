@@ -1,4 +1,3 @@
-var webApiDocService = require("./app_src/service/webApiDocService");
 var commonConst = require("./app_src/common/commonConst");
 var myTaskService = require("./app_src/myTask/myTaskService");
 
@@ -21,7 +20,7 @@ module.exports = function(grunt) {
                     var isCtrlDir = /api_doc_data\/controller/.test( srcpath );
                     if (isCtrlDir) {
                         if ( srcpath.indexOf( commonConst.EXPLAIN_FILE ) == -1 ){
-                            content = webApiDocService.createCtrlData( content );
+                            content = content + "// append .... test ";
                         }
                     } else {
 
