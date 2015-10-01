@@ -5,7 +5,7 @@ import os
 from lib.bottle import static_file
 
 from src import app
-from src.common.CommonConst import PROJECT_PATH
+from src.commons.CommonConst import PROJECT_PATH
 
 staticPath =  PROJECT_PATH + "views"
 

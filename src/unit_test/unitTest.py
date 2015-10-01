@@ -1,6 +1,6 @@
-import src.common.CommonConst
+import src.commons.CommonConst
 
-from src.common.dao.BaseDao import *
+from src.commons.dao.BaseDao import *
 
 dao = BaseDao( )
 count = dao.execute( "delete from user" )

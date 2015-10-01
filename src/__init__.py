@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 __version__ = '0.1'
 import os
+import src.commons.CommonConst
 from lib.bottle import Bottle, TEMPLATE_PATH
 app = Bottle()
 
