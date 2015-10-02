@@ -1,0 +1,54 @@
+{
+  "module": "notRest",
+  "moduleName": "非接口信息说明",
+  "explain": "非接口的一些信息说明",
+  "apiList": [
+    {
+      "name": "医生回复消息",
+      "explain": "医生回复消息说明",
+      "result": {
+        "state": "type=String& explain=状态码,0表示成功",
+        "message": "type=String& explain=返回消息",
+        "data": {
+          "doctorName": "type=String& explain=医生名称",
+          "avatarUrl": "type=String& explain=医生头像url",
+          "messageType": "type=String& explain=消息类型TEXT=文本,VIDEO=视频语音,PHOTO=图片",
+          "message": "type=String& explain=消息,消息类型TEXT=文本消息,PHOTO=图片路径",
+          "displayTime": "type=String& explain=是否显示时间",
+          "createDate": "type=String& explain=发送消息时间"
+        }
+      }
+    },{
+      "name": "推送-聊天信息",
+      "explain": "医生回复消息",
+      "result": {
+          "title":"type=String& explain=标题",
+          "description":"type=String& explain=说明",
+          "notification_builder_id":"type=Integer& explain=不知",
+          "notification_basic_style":"type=Integer& explain=不知",
+          "open_type":"type=String& explain=点击通知的打开类型",
+          "url":"type=String& explain=点击要跳转的url",
+          "pkg_content":"",
+          "custom_content":{
+            "pushType": "type=String& explain=推送类型CONSULTING_PRIVATE=面对面聊天,CONSULTING_PUBLIC=快速咨询",
+            "doctorId": "type=String& explain=医生ID(用于进入面对面聊天)"
+          }}
+     
+    },{
+      "name": "推送-多设备登陆被挤下线",
+      "explain": "多设备登陆被挤下线",
+      "result": {
+          "title":"type=String& explain=标题",
+          "description":"type=String& explain=被挤下线时的说明!",
+          "notification_builder_id":"type=Integer& explain=不知",
+          "notification_basic_style":"type=Integer& explain=不知",
+          "open_type":"type=String& explain=点击通知的打开类型",
+          "url":"type=String& explain=点击要跳转的url",
+          "pkg_content":"",
+          "custom_content":{
+            "pushType": "type=String& explain=推送类型SYSTEM_CROWDED_OFFLINE=多设备登陆被挤下线"
+          }}
+     
+    }
+  ]
+}

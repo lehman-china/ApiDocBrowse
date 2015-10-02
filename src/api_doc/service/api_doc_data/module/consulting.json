@@ -26,7 +26,8 @@
           "consultingUrl": "type=String& explain=咨询的url"
         }
       }
-    },{
+    },
+    {
       "name": "医生详情",
       "url": "/api/consulting/doctorDetail",
       "type": "GET",
@@ -44,8 +45,95 @@
           "focusCount": "type=String& explain=粉丝数量",
           "intro": "type=String& explain=简介",
           "position": "type=String& explain=职称",
-          "online": "type=String& explain=是否在线",
+          "focus": "type=Boolean& explain=是否关注",
+          "online": "type=Boolean& explain=是否在线",
+          "isPatient": "type=Boolean& explain=是否是患者(患者无法取消关注)",
           "consultingUrl": "type=String& explain=咨询的url"
+        }
+      }
+    },
+    {
+      "name": "读取咨询聊天记录",
+      "url": "/api/consulting/message/chatHistory",
+      "type": "GET",
+      "contentType": "text/plain;charset=UTF-8",
+      "param": {
+        "pageNumber": "type=String& explain=页码& default=1",
+        "pageSize": "type=String& explain==一页显示的条数& default=10",
+        "tempMessageId": "type=String& explain=聊天消息ID& default=00014ddc70b5ffe6"
+      },
+      "result": {
+        "state": "type=String& explain=状态码,0表示成功",
+        "message": "type=String& explain=返回消息",
+        "data": {
+          "displayTime" : "type=Boolean& explain=是否显示时间",
+          "avatarUrl" : "type=String& explain=头像Url,医生才有",
+          "sideFlag" : "type=Boolean& explain=是否是医生的回复",
+          "messageType": "type=String& explain=消息类型TEXT=文本,VIDEO=视频语音,PHOTO=图片& default=TEXT",
+          "message" : "type=String& explain=消息",
+          "userName" : "type=String& explain=显示的名称",
+          "createDate" : "type=String& explain=消息发送时间"
+        }
+      }
+    },
+    {
+      "name": "发送咨询消息(有说明)",
+      "explain": "1. 先调用此接口发送消息(数据库储存数据).\n  1.1.发送图片\n    1.1.1.把用户发送的图片压缩为400最长边,保持原比例,控制在512kb以下(减轻服务器,网络负担);\n    1.1.2.把图片数据转换为base64编码\n2. 调用WebSocket,发送内容:tempMessageId(通知服务器转发消息)",
+      "url": "/api/consulting/submit",
+      "type": "POST",
+      "contentType": "application/x-www-form-urlencoded;charset=UTF-8",
+      "param": {
+        "messageType": "type=String& explain=消息类型TEXT=文本,VIDEO=视频语音,PHOTO=图片& default=TEXT",
+        "message": "type=String& explain=消息,消息类型TEXT=文本消息,PHOTO=图片Base64数据& default=测试App咨询消息.",
+        "tempMessageId": "type=String& explain=聊天消息ID& default=00014ddc70b5ffe6",
+        "doctorId": "type=String& explain=医生ID& default=00014c5694097904",
+        "processId": "type=String& explain=受理者ID& default=00014c5694097904",
+        "subjectType": "type=String& explain=咨询消息的类型PUBLIC=快速咨询,PRIVATE=面对面咨询& default=PRIVATE"
+      },
+      "result": {
+        "state": "type=String& explain=状态码,0表示成功",
+        "message": "type=String& explain=返回消息",
+        "data": {
+        }
+      }
+    },
+    {
+      "name": "进入快速咨询",
+      "url": "/api/consulting/fastConsulting",
+      "type": "GET",
+      "contentType": "text/plain;charset=UTF-8",
+      "param": {
+      },
+      "result": {
+        "state": "type=String& explain=状态码,0表示成功",
+        "message": "type=String& explain=返回消息",
+        "data": {
+          "doctorName": "type=String& explain=医生名称",
+          "processId": "type=String& explain=受理之ID",
+          "doctorId": "type=String& explain=医生ID",
+          "tempMessageId": "type=String& explain=消息ID",
+          "webSocketUrl": "type=String& explain=webSocket连接Url",
+          "subjectType": "type=String& explain=快速咨询或面对面咨询类型"
+        }
+      }
+    },
+    {
+      "name": "进入面对面咨询",
+      "url": "/api/consulting/soloConsulting",
+      "type": "GET",
+      "contentType": "text/plain;charset=UTF-8",
+      "param": {
+        "doctorId": "type=String& explain=医生ID& default=00014c5697a16e07"
+      },
+      "result": {
+        "state": "type=String& explain=状态码,0表示成功",
+        "message": "type=String& explain=返回消息",
+        "data": {
+          "processId": "type=String& explain=受理之ID",
+          "doctorId": "type=String& explain=医生ID",
+          "tempMessageId": "type=String& explain=消息ID",
+          "webSocketUrl": "type=String& explain=webSocket连接Url",
+          "subjectType": "type=String& explain=快速咨询或面对面咨询类型"
         }
       }
     }

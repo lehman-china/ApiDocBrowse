@@ -1,5 +1,3 @@
-import src.commons.CommonConst
-
 from src.commons.dao.BaseDao import *
 
 dao = BaseDao( )

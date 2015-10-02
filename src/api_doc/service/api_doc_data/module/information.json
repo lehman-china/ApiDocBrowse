@@ -35,11 +35,13 @@
           "viewPicture" : "type=String& explain=封面图片url",
           "publisher" : "type=String& explain=作者",
           "title" : "type=String& explain=标题",
-          "externalUrl" : "type=String& explain=文章链接"
+          "externalUrl" : "type=String& explain=文章详情链接",
+          "favoriteCount": "type=String& explain=收藏数",
+          "praiseCount": "type=String& explain=点赞数",
         }
       }
     }, {
-      "name": "查看宝典文章",
+      "name": "查看宝典文章详情",
       "url": "/api/information/view",
       "type": "GET",
       "contentType": "text/plain;charset=UTF-8",
@@ -50,8 +52,26 @@
         "state": "type=String& explain=状态码,0表示成功",
         "message": "type=String& explain=返回消息",
         "data": {
-          "__explain": "宝典数据,测试一看便知 , 文章内容使用 unescape 转码"
+          "externalUrl" : "type=String& explain=文章详情链接",
+          "viewPicture" : "type=String& explain=封面图片url",
+          "content" : "type=String& explain=内容前50个字......",
+          "isFavorite" : "type=Boolean& explain=是否收藏", 
+          "isPraise" : "type=Boolean& explain=是否点赞" 
         }
+      }
+    },{
+      "name": "点赞+取消赞",
+      "url": "/api/information/praise",
+      "type": "GET",
+      "contentType": "text/plain;charset=UTF-8",
+      "param": {
+        "information.infoId": "type=String& explain=点赞的宝典ID& default=00014c5b7678cb06",
+        "isPraise": "type=String& explain=点赞或取消点赞 1/0& default=1"
+      },
+      "result": {
+        "state": "type=String& explain=状态码,0表示成功",
+        "message": "type=String& explain=返回消息",
+        "data": "type=String& explain=."
       }
     }
   ]

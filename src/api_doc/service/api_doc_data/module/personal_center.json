@@ -71,7 +71,9 @@
           "lastPage": "type=Boolean& explain=是否是最后一页",
           "contentList": [
             {
+              "fastConsu": "type=Boolean& explain=是否是快速咨询",
               "name": "type=String& explain=对话组名称",
+              "doctorId": "type=String& explain=医生Id",
               "avatarUrl": "type=String& explain=对话组显示的头像",
               "content": "type=String& explain=对话组显示的内容",
               "lastTime": "type=String& explain=最后对话时间"
@@ -105,6 +107,17 @@
               "replyCount": "type=String& explain=回复数统计",
               "praiseCount": "type=String& explain=点赞数统计",
               "showTimeName": "type=String& explain=发帖时间中文显示"
+            }
+          ],
+          "infoContentList":[
+            {
+              "infoId" : "type=String& explain=文章ID",
+              "viewPicture" : "type=String& explain=封面图片url",
+              "publisher" : "type=String& explain=作者",
+              "title" : "type=String& explain=标题",
+              "externalUrl" : "type=String& explain=文章链接",
+              "favoriteCount": "type=String& explain=收藏数",
+              "praiseCount": "type=String& explain=点赞数"
             }
           ]
         }
@@ -197,7 +210,7 @@
       "param": {
         "babyId": "type=String& explain=宝宝ID(无是新建,有则是修改)& default=",
         "name": "type=String& explain=宝宝姓名& default=宝宝(接口数据测试)",
-        "relatedId": "type=String& explain=关联标识（父母openId）& default=de62ca6c-fa91-4c4f-a01c-325006f3906b",
+        "relatedId": "type=String& explain=关联标识（当前用户openId）& default=de62ca6c-fa91-4c4f-a01c-325006f3906b",
         "gender": "type=String& explain=性别:0为男 1为女& default=0",
         "birthday": "type=String& explain=宝宝出生日期& default=2015-05-04",
         "avatarImg": "type=String& explain=宝宝头像Base64数据& default=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"

@@ -5,5 +5,5 @@ import os
 thePath = os.path.dirname( __file__  )
 
 #截取字符串至项目名：
-PROJECT_PATH = thePath[:thePath.__len__() - 11 ]
-print( PROJECT_PATH )
+PROJECT_PATH = thePath[:thePath.rfind("src")  ]
+print( "项目路径",PROJECT_PATH )

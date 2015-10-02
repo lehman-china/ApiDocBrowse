@@ -3,7 +3,7 @@ import time
 __author__ = 'Administrator'
 import sqlite3
 
-from src.commons.CommonConst import PROJECT_PATH
+from src.commons.constants.COMMON import PROJECT_PATH
 class BaseDao(object):
     DB_PATH = PROJECT_PATH + 'web_server/sqlite3_db/app.db'
     conn = None
