@@ -11,7 +11,7 @@ def deco(arg):
 def myfunc():  
     print(" myfunc() called.")  
  
-@deco("module2222222222222222222222")
+@deco("module2")
 def myfunc2():  
     print(" myfunc2() called.")  
   
