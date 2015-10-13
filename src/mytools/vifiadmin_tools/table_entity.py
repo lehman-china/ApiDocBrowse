@@ -1,17 +1,17 @@
 import datetime
 from lib.bottle import template
 from src.commons.utils.mysql_utils import init_db,query
-init_db( '120.25.72.53', 'vifiadmin', 'myvifi', 'ViFi' )
+init_db( '192.168.1.212', 'vifiadmin', 'myvifi', 'ViFi' )
 
 
 # aop 注解
-isAopAnnotasion = True
+isAopAnnotasion = False
 # spring mvc 传参注解
 isWebAnnotasion = True
 # package_str = "package net.eoutech.commons.entity;";
 package_str = "package com.vifi.vrs.webmin.commons.entity;"
-entityName = "TbUser"
-tabName = "tbUser"
+entityName = "TbCronLog"
+tabName = "tbCronLog"
 
 type_mapping = {
     "252": "String",
@@ -45,15 +45,19 @@ def queryUser( cur ):
     public class ${entityName} {
 
     % for desc in cur.description:
-      % if pk_show:
-        @Id
-        <% pk_show=False %>
-      % end
+
       % if isAopAnnotasion:
+        % if pk_show:
+          @Id
+          <% pk_show=False %>
+        % end
         @Column( name = "${desc[0]}" )
       % end
+      % if isWebAnnotasion and type_mapping[str(desc[1])]=='Date':
+        @JSONField( format = "yyyy-MM-dd HH:mm:ss" )
+        @DateTimeFormat( pattern = "yyyy-MM-dd HH:mm:ss" )
+      % end
         private ${type_mapping[str(desc[1])]} ${desc[0]};
-
     % end
 
 
@@ -67,5 +71,4 @@ def queryUser( cur ):
     return 0
 
 
-queryUser( )
-
+queryUser()
