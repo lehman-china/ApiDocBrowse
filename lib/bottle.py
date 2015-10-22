@@ -2606,14 +2606,12 @@ def cookie_is_encoded(data):
 
 def html_escape(string):
     ''' Escape HTML special characters ``&<>`` and quotes ``'"``. '''
-    return string.replace('&','&amp;').replace('<','&lt;').replace('>','&gt;')\
-                 .replace('"','&quot;').replace("'",'&#039;')
+    return string
 
 
 def html_quote(string):
     ''' Escape and quote a string to be used as an HTTP attribute.'''
-    return '"%s"' % html_escape(string).replace('\n','&#10;')\
-                    .replace('\r','&#13;').replace('\t','&#9;')
+    return '"%s"' % html_escape(string)
 
 
 def yieldroutes(func):

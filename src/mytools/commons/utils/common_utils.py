@@ -12,3 +12,6 @@ def reg_sub_ex( reg ,callback,string):
         # 替换的内容
         return callback( param,child_ma )
     return re.sub(reg,reg_cb,string)
+
+
+
