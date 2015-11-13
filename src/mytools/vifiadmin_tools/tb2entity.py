@@ -1,15 +1,12 @@
-import datetime
-import pyperclip
-
 from lib.bottle import template
 from src.commons.utils.mysql_utils import init_db, query
+from src.mytools.commons.utils.common_utils import CommonUtils
 
-init_db('192.168.1.212', 'vifiadmin', 'myvifi', 'ViFi')
-
+init_db('192.168.1.215', 'root', 'myvifi', 'UUWIFI')
 
 # 是否添加aop 注解
 is_aop_annotasion = False
-pk_show = True
+
 # 是否添加 spring mvc 传参注解
 isWebAnnotasion = True
 # 属性是否有默认值
@@ -23,37 +20,30 @@ package_sel = {
 }
 package_str = package_sel["vifiwebmin.webmin"]
 
-
-tab_name = "tbBlackList"
-
-entity_name = tab_name[0:1].upper() + tab_name[1:]
+# 属性类型映射表
 type_mapping = {
     "252": "String",
     "253": "String",
     "3": "Integer",
     "8": "Integer",
     "1": "Integer",
-    "12": "Date"
+    "12": "Date",
+    "10": "Date"
 }
-val_def_mapping = {
-    "252": ' = " - "',
-    "253": ' = " - "',
-    "3": " = 0",
-    "8": " = 0",
-    "1": " = 0",
-    "12": " = new Date()"
-}
+
+# 属性是否是主键
+is_pk = True
 
 
 @query()
-def queryTb2JavaBean(cur):
+def query_tb2java_entity(cur):
     sql = "SELECT * FROM %s limit 0,1" % (tab_name)
     cur.execute(sql)
 
-    str = template("""
+    string = template("""
       ${package_str}
       import java.util.Date;
-      
+
     % if isWebAnnotasion:
       import com.alibaba.fastjson.annotation.JSONField;
       import org.springframework.format.annotation.DateTimeFormat;
@@ -69,9 +59,9 @@ def queryTb2JavaBean(cur):
 
     % for desc in cur.description:
       % if is_aop_annotasion:
-        % if pk_show:
+        % if is_pk:
           @Id
-          <% pk_show=False %>
+          
         % end
         @Column( name = "${desc[0]}" )
       % end
@@ -79,17 +69,26 @@ def queryTb2JavaBean(cur):
         @JSONField( format = "yyyy-MM-dd HH:mm:ss" )
         @DateTimeFormat( pattern = "yyyy-MM-dd HH:mm:ss" )
       % end
-        private ${type_mapping[str(desc[1])]}${desc[0]}${ val_def_mapping[str(desc[1])] if is_value_def else ''};
+        private ${type_mapping[str(desc[1])]} ${desc[0]};
+      <% is_pk=False %>
     % end
 
-
+    <% # Set Get 方法! %>
+    % for desc in cur.description:
+        <% val_def = desc[0][0:1].upper()+desc[0][1:] %>
+        public ${type_mapping[str(desc[1])]} get${val_def}() {return ${desc[0]};}
+        public void set${val_def}( ${type_mapping[str(desc[1])]} ${desc[0]} ) {this.${desc[0]} = ${desc[0]};}
+    % end
 
     }
-    """, dict(globals(), **vars()) )
+    """, dict(globals(), **vars()))
+    string = CommonUtils.line_space_add_sub(string, -4)
+    return CommonUtils.line_space_add_sub(string, -2)
 
-    return str
 
+def tb2java_entity(tb_name):
+    global tab_name,entity_name
+    tab_name = tb_name
+    entity_name = tab_name[0:1].upper() + tab_name[1:]
 
-pyperclip.copy(queryTb2JavaBean())
-print(pyperclip.paste())
-print("已复制到,粘贴板~")
+    return query_tb2java_entity()

@@ -1,12 +1,6 @@
-from urllib import request
-from lib.bottle import template
-string = """
-<th>
-	<label style="margin-bottom: 0;"><input type="checkbox" ng-model="data.checkbok"><span class="text"></span></label>
-</th>
-"""
+msg_file_w_path = "D:/test.js"
+fw = open(msg_file_w_path,mode='w',encoding="UTF-8")
+fw.write("2015-11-2 18:57:17")
+fw.close()
 
-rows=string.split("\n")
-
-result="'+\n'".join(rows)
-print(result)
+print("操作完成!!!!!")

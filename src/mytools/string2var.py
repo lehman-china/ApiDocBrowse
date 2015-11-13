@@ -1,16 +1,32 @@
+from src.mytools.commons.utils.common_utils import *
+
+
+def str2var(string):
+    rows = string.replace('"','\\"').split("\n")[1:-1]
+    result = '"+\n"'.join(rows)
+    result = '"%s"' % (result)
+    CommonUtils.clip(result)
+
+
+def var2str(string):
+    result = CommonUtils.reg_sub_ex(' "|\s"\s\+', lambda param, c_ma: "", string)
+    CommonUtils.clip(result)
+
+
 string = """
-
-<tr role="row" class="odd" ng-class="{active_tr:data.checkbok}" ng-repeat="data in view.page.contentList"
-	    ng-dblclick="dblclickOpenDetails(data)" ng-click="clickAddActive(data,$event)"  ng-td-data >
-	<th>
-		<label style="margin-bottom: 0;" onclick="event.stopPropagation()"><input type="checkbox" ng-model="data.checkbok"><span class="text"></span></label>
-	</th>
-</tr>
-
+SELECT
+	u.lastAPPPublicIP AS ip,
+	Count(u.lastAPPPublicIP) AS count,
+	ip.country,
+	ip.operators
+FROM
+	tbUser u
+JOIN tbIPAddress ip ON INET_ATON(u.lastAPPPublicIP) BETWEEN ip.startIp AND ip.endIP
+WHERE
+	u.accountState = 'Y'
+AND u.appState > 10
+GROUP BY
+	country
 """
 
-rows = string.split("\n")
-
-result = "'+\n'".join(rows)
-result = "'%s'" % (result)
-print(result)
+str2var(string)

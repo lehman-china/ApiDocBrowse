@@ -1,6 +1,6 @@
 __author__ = 'Administrator'
 import re
-from src.mytools.commons.utils.common_utils import reg_sub_ex
+from src.mytools.commons.utils.common_utils import CommonUtils
 string = """
 
 REG:
@@ -93,5 +93,6 @@ DATA", "CONTENT-LENGTH":"1142/7246", "TID":123}
 """
 
 
-res = reg_sub_ex('"([A-Z\-]*?)":',lambda param,child_ma:'"%s":' % child_ma(1).replace( "-", "_" ).lower( ),string)
-print( res )
+res = CommonUtils.reg_sub_ex('"([A-Z\-]*?)":', lambda param, child_ma:
+                 '"%s":' % child_ma(1).replace("-", "_").lower(), string)
+print(res)

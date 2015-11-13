@@ -1,12 +1,9 @@
-from urllib import request
-from lib.bottle import template
-string = """
-<th>
-	<label style="margin-bottom: 0;"><input type="checkbox" ng-model="data.checkbok"><span class="text"></span></label>
-</th>
-"""
+import os
+from src.mytools.commons.langconv.langconv import *
 
-rows=string.split("\n")
 
-result="'+\n'".join(rows)
-print(result)
+# 转换简体到繁体
+line = Converter('zh-hant').convert('中文(繁)')
+
+
+print(line)
