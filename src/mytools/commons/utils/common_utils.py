@@ -26,6 +26,9 @@ class CommonUtils:
 
         return re.sub(reg, reg_cb, string)
 
+
+
+
     @staticmethod
     def clip(string):
         pyperclip.copy(string)

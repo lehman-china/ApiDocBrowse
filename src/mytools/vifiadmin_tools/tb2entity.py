@@ -52,7 +52,7 @@ def query_tb2java_entity(cur):
     % if is_aop_annotasion:
       import javax.persistence.Id;
       import javax.persistence.Column;
-      @javax.persistence.Table( name = "${tab_name}" )
+      @javax.persistence.Table(name = "${tab_name}")
     % end
 
     public class ${entity_name} {
@@ -66,8 +66,8 @@ def query_tb2java_entity(cur):
         @Column( name = "${desc[0]}" )
       % end
       % if isWebAnnotasion and type_mapping[str(desc[1])]=='Date':
-        @JSONField( format = "yyyy-MM-dd HH:mm:ss" )
-        @DateTimeFormat( pattern = "yyyy-MM-dd HH:mm:ss" )
+        @JSONField(format = "yyyy-MM-dd HH:mm:ss")
+        @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
       % end
         private ${type_mapping[str(desc[1])]} ${desc[0]};
       <% is_pk=False %>
@@ -75,8 +75,14 @@ def query_tb2java_entity(cur):
 
     <% # Set Get 方法! %>
     % for desc in cur.description:
-        <% val_def = desc[0][0:1].upper()+desc[0][1:] %>
+        <%
+            val_def = desc[0][0:1].upper()+desc[0][1:]
+            is_illed = val_def == desc[0] # 如果第一个字母是大写的字段,,JSONFast,解析时是不正确的.. 需要加上 @JSONField( name = "name" )
+            jf_map_name = '@JSONField(name = "'+val_def+'")' if is_illed else ''
+        %>
+        ${jf_map_name}
         public ${type_mapping[str(desc[1])]} get${val_def}() {return ${desc[0]};}
+        ${jf_map_name}
         public void set${val_def}( ${type_mapping[str(desc[1])]} ${desc[0]} ) {this.${desc[0]} = ${desc[0]};}
     % end
 
