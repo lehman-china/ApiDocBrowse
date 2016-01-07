@@ -84,3 +84,5 @@ def sql_result2javabean(datas):
 
 res = sql_result2javabean()
 CommonUtils.clip(res)
+
+
