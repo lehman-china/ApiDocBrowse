@@ -40,7 +40,7 @@ def query_tb2java_entity(cur):
     sql = "SELECT * FROM %s limit 0,1" % (tab_name)
     cur.execute(sql)
 
-    string = template("""
+    entity_template = template("""
       ${package_str}
       import java.util.Date;
 
@@ -78,18 +78,20 @@ def query_tb2java_entity(cur):
         <%
             val_def = desc[0][0:1].upper()+desc[0][1:]
             is_illed = val_def == desc[0] # 如果第一个字母是大写的字段,,JSONFast,解析时是不正确的.. 需要加上 @JSONField( name = "name" )
-            jf_map_name = '@JSONField(name = "'+val_def+'")' if is_illed else ''
+            jf_type = type_mapping[str(desc[1])]
+            jf_date_fmt = ', format = "yyyy-MM-dd HH:mm:ss"' if jf_type == 'Date' else ''
+            jf_map_name = '@JSONField(name = "'+val_def+'"'+jf_date_fmt+')' if is_illed else ''
         %>
         ${jf_map_name}
-        public ${type_mapping[str(desc[1])]} get${val_def}() {return ${desc[0]};}
+        public ${jf_type} get${val_def}() {return ${desc[0]};}
         ${jf_map_name}
-        public void set${val_def}( ${type_mapping[str(desc[1])]} ${desc[0]} ) {this.${desc[0]} = ${desc[0]};}
+        public void set${val_def}( ${jf_type} ${desc[0]} ) {this.${desc[0]} = ${desc[0]};}
     % end
 
     }
     """, dict(globals(), **vars()))
-    string = CommonUtils.line_space_add_sub(string, -4)
-    return CommonUtils.line_space_add_sub(string, -2)
+    entity_template = CommonUtils.line_space_add_sub(entity_template, -4)
+    return CommonUtils.line_space_add_sub(entity_template, -2)
 
 
 def tb2java_entity(tb_name):

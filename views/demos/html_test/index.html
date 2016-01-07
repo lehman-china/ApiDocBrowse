@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BrowsersyncExample</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+
+    <script src="http://cdn.bootcss.com/angular.js/1.4.8/angular.min.js"></script>
+    <script src="js/index.js"></script>
+
+</head>
+
+<body ng-app="demo" ng-controller="demoCtrl">
+
+
+<form name="myForm" style="background-color: #ccc;position: absolute;top: 200px;left: 100px;" >
+    <label>Value:
+        <input name="leh" type="checkbox" ng-model="checkboxModel.value1">
+    </label><br/>
+    <label>Value2:
+        <input name="leh" type="checkbox" ng-model="checkboxModel.value1"
+               ng-true-value="'YES'" ng-false-value="'NO'">
+    </label><br/>
+    <tt>value1 = {{checkboxModel.value1}}</tt><br/>
+    <tt>value2 = {{checkboxModel.value2}}</tt><br/>
+</form>
+
+</body>
+</html>
+

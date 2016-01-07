@@ -26,9 +26,6 @@ class CommonUtils:
 
         return re.sub(reg, reg_cb, string)
 
-
-
-
     @staticmethod
     def clip(string):
         pyperclip.copy(string)
@@ -42,7 +39,7 @@ class CommonUtils:
         if num < 0:
             return CommonUtils.reg_sub_ex("\n {%d}" % (num * -1), lambda p, c: "\n", string)
         else:
-            return  CommonUtils.reg_sub_ex("\n", lambda p, c: "\n" + (" " * num) , string)
+            return CommonUtils.reg_sub_ex("\n", lambda p, c: "\n" + (" " * num), string)
 
     @staticmethod
     def write_text(f_path, text, mode="w"):

@@ -30,6 +30,8 @@ type_mapping = {
     "time": "D",
     "timestamp": "D"
 }
+# 不分割布局的 页面
+not_split_layout = ["tbSCGroup","tbGoIPDev","tbViFiDevGroup","tbViFiDevice"]
 
 
 def tb2ng_route_cfg(tab_name):
@@ -54,7 +56,7 @@ def tb2ng_route_cfg(tab_name):
 
             # left_cfg ,字段布局是否显示在左边
             left_cfg = ""
-            if is_split:
+            if is_split and list(filter(lambda tn:tab_name==tn,not_split_layout)).__len__() == 0:
                 left_cfg = " left: " + ("true," if desc_inx < (desc_len / 2) else "false,")
 
             type_cfg = ' type: "' + type + '",' if type != "S" else ""
@@ -63,7 +65,7 @@ def tb2ng_route_cfg(tab_name):
             _def = "def:0" if type == "I" else ""
 
             # 验证设置
-            vali_cfg = ' vali: {maxlength : '+field_len+'},' if field_len else ""
+            vali_cfg = ' vali: {maxlength: '+field_len+'},' if field_len else ""
 
             # 编辑时 不显示字段
             hideEditCfg = ' hideEdit: "A",' if field_name in unshowEdit else ""
@@ -74,10 +76,8 @@ def tb2ng_route_cfg(tab_name):
             # 编辑时 主键 禁用状态
             disabledInputCfg = ' disabled: "E",' if is_pk else ""
 
-            if is_increment:
-                disabledInputCfg = ' disabled: "A",' if disabledInputCfg else ' disabled: "N",'
-
-
+            if is_increment and hideEditCfg.__len__() == 0:
+                hideEditCfg = ' hideEdit: "A",'
 
             view_cfg_list = type_cfg+pk_key+left_cfg+disabledInputCfg+hideEditCfg+vali_cfg
             tpl_str += template("""{name: "${field_name}",${view_cfg_list}},

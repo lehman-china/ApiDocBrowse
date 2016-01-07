@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BrowsersyncExample</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<style>
+
+    .sta-round {
+        border-radius: 50%;
+
+        width: 15px;
+        height: 15px;
+        position: relative;
+        display: inline-block;
+    }
+    .sta-round:hover{
+        border: 2px solid #fff302;
+    }
+
+    .sta-round > .sta-tips{
+        background: #ccc;
+        position: absolute;
+        z-index: 99;
+        width: 120px;
+        height: 120px;
+        border-radius:10px;
+        padding: 5px;
+        top:16px;
+        left:-50px;
+        display: none;
+    }
+
+
+    .sta-round:hover > .sta-tips {
+        display: block;
+    }
+
+    .simp-sta-table td{
+        padding: 2px;
+    }
+
+    .simp-title{
+        text-align:center;
+    }
+    .simp-title > div{
+        margin-left:20px;
+    }
+
+</style>
+
+<body ng-app="demo" ng-controller="demoCtrl">
+
+<div style="padding: 15%">
+    <div class="simp-title">
+        <div class="sta-round" style="background-color: gray;"></div>:无卡
+        <div class="sta-round" style="background-color: green;"></div>:空闲123
+        <div class="sta-round" style="background-color: blue;"></div>:占用1231123123
+        <div class="sta-round" style="background-color: red;"></div>:错误123
+    </div>
+
+    <div class="simp-explain">
+        simp设备状态:<br>
+        无卡:0/18,空闲:0/18,使用:0/18,错误:0/18
+
+    </div>
+
+
+    <table class="simp-sta-table">
+        <tr ng-repeat="values in valueList">
+            <td ng-repeat="val in values">
+                <div class="sta-round" ng-style="val.style">
+                    <div class="sta-tips">
+                        卡槽:{{val.inx}}<br>
+                        状态:{{val.state}}
+                    </div>
+                </div>
+            </td>
+        </tr>
+
+
+    </table>
+</div>
+
+</body>
+</html>
+
+<!--<script src="/common/bundle/commons.js"></script>-->
+<!--<script src="/common/bundle/beyond.bundle.js"></script>-->
+<!--<script src="/common/js/framework/angular/angular.min.js"></script>-->
+<!--<script src="js/index.js"></script>-->

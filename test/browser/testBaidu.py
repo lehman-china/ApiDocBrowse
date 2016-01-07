@@ -5,7 +5,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 # 导入 time 包
 import time
 
-driver = webdriver.Firefox()
+driver = webdriver.Chrome()
 driver.get("http://www.baidu.com")
 # WebDriverWait()方法使用
 element = WebDriverWait(driver, 10).until(lambda driver: driver.find_element_by_id("kw"))

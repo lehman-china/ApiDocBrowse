@@ -20,10 +20,10 @@ def tb2i18n_cfg(tab_name):
         for desc in cur.description:
             if not desc[0] in not_cfg:
                 tpl_str += template(
-                    "db.${tab_name}.${desc[0]}=${desc[0]}\ndb.${tab_name}.${desc[0]}.help= please input ${desc[0]}\n", dict(globals(), **vars()))
+                    "db.${tab_name}.${desc[0]}=${desc[0]}\ndb.${tab_name}.${desc[0]}.help=not_help\n", dict(globals(), **vars()))
         return tpl_str
 
     return query_tb2i18n_cfg()
 
 
-# print(tb2i18n_cfg("tbAgent"))
+print(tb2i18n_cfg("tbTrunk"))

@@ -1,4 +1,5 @@
 import os
+import re
 
 from lib.bottle import template
 from src.commons.utils.mysql_utils import init_db, query
@@ -11,7 +12,15 @@ class AddPage():
     tb_index = 0
     ctrl_path = "D:/Users/Desktop/Projects/java/vifi_trunk/vifiwebmin/src/net/eoutech/webmin/vifi/ctrl"
 
+
+    # 表名对应的js文件映射
+    js_path_map = None
+
     def __init__(self, tb_name):
+
+
+
+
         self.tb_name = tb_name
         self.tb_entity_name = tb_name[0:1].upper() + tb_name[1:]
         self.resource_name = "vifi_" + tb_name[2:][0:1].lower() + tb_name[3:]
@@ -28,18 +37,32 @@ class AddPage():
         # self.routejs_file = "D:/add_page/js/route.config.js"
         #
         # self.js_file = "D:/add_page/js/%s.js" % (self.var_entity_name)
+
         ####################---- 项目目录区域
         project_dir = "D:/Users/Desktop/Projects/java/vifi_trunk/vifiwebmin/"
-
-        self.ctrl_file = project_dir + "src/net/eoutech/webmin/vifi/ctrl/%sCtrl.java" % (self.simp_entity_name)
-        self.service_file = project_dir + "src/net/eoutech/webmin/vifi/service/%sService.java" % (self.simp_entity_name)
-        self.dao_file = project_dir + "src/net/eoutech/webmin/vifi/dao/%sDao.java" % (self.simp_entity_name)
+        module_dir = "src/net/eoutech/webmin/rate/"
+        self.ctrl_file = project_dir + module_dir + "ctrl/%sCtrl.java" % (self.simp_entity_name)
+        self.service_file = project_dir + module_dir + "service/%sService.java" % (self.simp_entity_name)
+        self.dao_file = project_dir + module_dir + "dao/%sDao.java" % (self.simp_entity_name)
         self.entity_file = project_dir + "src/net/eoutech/webmin/commons/entity/%s.java" % (self.tb_entity_name)
 
         self.i18n_file = project_dir + "src/messages_zh_CN.properties"
         self.routejs_file = project_dir + "WebContent/page/frame/js/route.config.js"
 
-        self.js_file = project_dir + "WebContent/page/vifi/js/%s.js" % (self.var_entity_name)
+        AddPage.js_path_map = AddPage.js_path_map or self.get_js_config_map()
+        self.js_file = project_dir + AddPage.js_path_map[tb_name]
+
+    def get_js_config_map(self):
+        all_webmin_tb = AddPage.get_all_webmin_tb_dict()
+        path = "D:/Users/Desktop/Projects/java/vifi_trunk/vifiwebmin/WebContent/page/"
+        cfg_dict = {}
+        for dirpath, dirnames, filenames in os.walk(path):
+            for filename in filter(lambda fn: re.search("\.js$", fn), filenames):
+                tb_name = CommonUtils.reg_sub_ex("^(.)(.*?)\.js", lambda p, c: "tb" + c(1).upper() + c(2), filename)
+                if tb_name in all_webmin_tb:
+                    cfg_dict[tb_name] = (dirpath + "/" + filename).replace("\\", "/").replace("D:/Users/Desktop/Projects/java/vifi_trunk/vifiwebmin/", "")
+        print(cfg_dict)
+        return cfg_dict
 
     # 创建ctrl.java
     def add_ctrl_class(self):
@@ -138,7 +161,7 @@ class AddPage():
 
     # 国际化配置文件
     def i18n_cfg(self):
-        # 菜单配置
+        # 国际化配置文件内容
         cfg_file = CommonUtils.read_text(self.i18n_file)
         cfg_file = cfg_file.replace("menu.vifias=VPX", "menu.%s=%s\nmenu.vifias=VPX" % (self.resource_name, self.simp_entity_name))
         # 字段配置
@@ -153,15 +176,12 @@ class AddPage():
     def crt_js_file(self):
         from src.mytools.vifiadmin_tools.tb2ngRouteCfg import tb2ng_route_cfg
         view_cfg = tb2ng_route_cfg(self.tb_name)
-        view_cfg = CommonUtils.line_space_add_sub(view_cfg, 8)
+        view_cfg = CommonUtils.line_space_add_sub(view_cfg, 9)
         string = template("""
         var appModule = require("appModule");
-        var Utils = require("commonUtils");
-        var AngularBaseCtrl = require("frameAdminBase");
-
-        appModule.controller("${self.var_entity_name}Ctrl", ["$scope", "$rootScope", function ($scope, $rootScope) {
+        appModule.controller("${self.var_entity_name}Ctrl", ["$scope", "$rootScope", "Utils", "frameAdminBase", function ($scope, $rootScope, Utils, AngularBaseCtrl) {
             var viewCfg = {
-                currentUri: "${self.resource_url}",
+                currentUri: "${self.resource_url}/",
                 fields: ${view_cfg}
             };
             //call模拟 继承 AngularBaseCtrl父类
@@ -193,7 +213,7 @@ class AddPage():
     def add_sql_resource(self):
         date_time = "2015-11-11 11:20:27"
 
-        @query(sql="SELECT max(tbCfrmResource.menu) max_menu FROM tbCfrmResource where menu like '3-%'")
+        @query(sql="SELECT max(tbCfrmResource.menu) max_menu FROM tbCfrmResource where menu like '03-%'")
         def get_menu_inx(datas):
             max_menu = datas[0]["max_menu"]
             max_menu_arr = max_menu.split("-")
@@ -233,7 +253,20 @@ class AddPage():
     @staticmethod
     @query(sql="show tables")
     def get_all_webmin_tb(datas):
-        return [data["Tables_in_UUWIFI"] for data in datas if not data["Tables_in_UUWIFI"].__contains__("tbCfrm")]
+        # 排除 tbCfrm开头的表
+        tbs = [data["Tables_in_UUWIFI"] for data in datas if not data["Tables_in_UUWIFI"].__contains__("tbCfrm")]
+        # 排除指定的一些表!
+        exclide_tb = ["tbIPAddress"]
+        tbs = [tb for tb in tbs if list(filter(lambda tn: tb != tn, exclide_tb)).__len__() > 0]
+
+        return tbs
+
+    @staticmethod
+    def get_all_webmin_tb_dict():
+        all_webmin_tb = {}
+        for tb_name in AddPage.get_all_webmin_tb():
+            all_webmin_tb[tb_name] = True
+        return all_webmin_tb
 
     # 获得需要创建的表
     @staticmethod
@@ -270,12 +303,7 @@ class AddPage():
 
         return [AddPage.crt_page(tb_name) for tb_name in need_crt_tbs]
 
-    # 创建剩下的所有表
+    # 创建所有表
     @staticmethod
     def crt_all_page():
         return [AddPage.crt_page(tb_name) for tb_name in AddPage.get_all_webmin_tb()]
-
-
-
-
-

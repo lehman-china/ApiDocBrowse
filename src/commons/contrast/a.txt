@@ -1,37 +1,37 @@
-{ name : "keyUserID", type : "S", pk : true, left : true,  show : true},
-{ name : "idxPhoneNumber", type : "S", left : true,  show : true},
-{ name : "idxAreaCode", type : "S", left : true,  show : true},
-{ name : "password", type : "S", left : true,  show : true},
-{ name : "language", type : "S", left : true,  show : true},
-{ name : "roamAreaCode", type : "S", left : true,  show : true},
-{ name : "roamTimeZone", type : "I", left : true,  show : true},
-{ name : "idxDomain", type : "S", left : true,  show : true},
-{ name : "displayNumber", type : "S", left : true,  show : true},
-{ name : "accountState", type : "S", left : true,  show : true},
-{ name : "appState", type : "I", left : true,  show : true},
-{ name : "vifiState", type : "I", left : true,  show : true},
-{ name : "idxViFiID", type : "S", left : true,  show : true},
-{ name : "idxVPXID", type : "S", left : true,  show : true},
-{ name : "idxVSWID", type : "S", left : true,  show : true},
-{ name : "idxGoIPPortID", type : "S", left : true,  show : true},
-{ name : "idxSimpPortID", type : "S", left : true,  show : true},
-{ name : "idxSimCardID", type : "S", left : true,  show : true},
-{ name : "userBalance", type : "I", left : true,  show : true},
-{ name : "voiceBalance", type : "I", left : false,  show : true},
-{ name : "dataBalance", type : "I", left : false,  show : true},
-{ name : "credit", type : "I", left : false,  show : true},
-{ name : "idxAgentID", type : "S", left : false,  show : true},
-{ name : "sipExpire", type : "I", left : false,  show : true},
-{ name : "lastAPPOnlineDate", type : "D", left : false,  show : true},
-{ name : "lastAPPPublicIP", type : "S", left : false,  show : true},
-{ name : "lastAPPDevInfo", type : "S", left : false,  show : true},
-{ name : "lastAPPVer", type : "S", left : false,  show : true},
-{ name : "lastViFiDate", type : "D", left : false,  show : true},
-{ name : "lastViFiID", type : "S", left : false,  show : true},
-{ name : "lastViFiPublicIP", type : "S", left : false,  show : true},
-{ name : "userType", type : "I", left : false,  show : true},
-{ name : "remarks", type : "S", left : false,  show : true},
-{ name : "mdfTm", type : "D", left : false,  notEdit : true, show : true},
-{ name : "mdfBy", type : "S", left : false,  notEdit : true, show : true},
-{ name : "crtTm", type : "D", left : false,  notEdit : true, show : true},
-{ name : "crtBy", type : "S", left : false,  notEdit : true, show : true}
+5.1	基本设置(TBCONFIGURE)	7
+5.2	短信模板(TBSMSTEMPLATE)	7
+5.3	VNS节点(TBVNS)	8
+5.4	版本管理(TBVERSION)	10
+5.5	IP黑名单(TBBLACKLIST)	11
+6.1	VPX列表(TBVPX)	13
+6.2	SIP线路(TBTRUNK)	15
+6.3	外呼路由(TBOUTBOUNDROUTE)	17
+7.1	VSW列表(TBVSW)	18
+7.2	VSW会话(UUWIFISESSION)	20
+8.1	GOIP设备(TBGOIPDEV)	22
+8.2	GOIP端口列表(TBGOIPPORT)	24
+9.1	SIMP设备(TBSIMPDEV)	26
+9.2	SIMP端口列表(TBSIMPPORT)	28
+10.1	设备组(TBVIFIDEVGROUP)	30
+10.2	UUWIFI列表(TBVIFIDEVICE)	31
+10.3	启动卡组(TBGLOBALSIMGRP)	34
+10.4	启动卡(TBGLOBALSIM)	35
+11.1	用户列表(TBUSER)	37
+11.2	赠送账号(TBUSERSUITE)	39
+11.3	UUWIFI日租(TBDAILYRENTAL)	40
+11.4	充值记录(TBUSERTOPUPRCD)	41
+11.5	赠送记录(TBREWARDRCD)	42
+11.6	用户反馈(TBFEEDBACK)	43
+12.1	代理商列表(TBAGENT)	45
+12.2	增值记录(TBAGENTADDITIONRCD)	46
+12.3	扣费记录(TBAGENTDEDUCTIONRCD)	47
+13.1	地区管理(TBAREA)	48
+13.2	通话费率(TBRATE)	49
+13.3	流量费率(TBRATE)	50
+14.1	SIM卡组(TBSCGROUP)	53
+14.2	SIM卡列表(TBSIMCARD)	56
+15.1	历史话单(TBCDR)	60
+15.2	流量账单(TBCDR)	62
+15.3	短信记录(TBSMS)	62
+16.1	每日统计(TBCOUNTDAILY)	64
+16.2	月度统计(TBCOUNTMONTHLY)	65
