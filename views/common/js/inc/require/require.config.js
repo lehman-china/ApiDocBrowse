@@ -21,7 +21,7 @@ require.config( {
                 "css!" + baseUrl + "framework/bootstrap/css/bootstrap.min"
             ]
         },
-        "commonUtil": [ 'jquery', 'jvalidator',"md5" ],
+        "commonUtil": [ 'jquery', "md5" ],
         "jvalidator": [ 'jquery' ],
         "layer": {deps: [
             'jquery',
@@ -33,7 +33,6 @@ require.config( {
         "angularSanitize": baseUrl + "framework/angular/angular-sanitize.min",
         "avalon": baseUrl + "framework/avalon/avalon",
         "ngmodel.format": baseUrl + "framework/angular/ngmodel.format", // angular �󶨸�ʽ��
-        "jvalidator": baseUrl + "inc/jvalidator",// jq ����֤
         "jquery": baseUrl + "inc/jquery",
         "md5": baseUrl + "inc/md5",
         "bootstrap": baseUrl + "framework/bootstrap/js/bootstrap.min",

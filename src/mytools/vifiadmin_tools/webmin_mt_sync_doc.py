@@ -12,7 +12,7 @@ def get_table( q_table ):
 begin_time = time.time()
 print( begin_time )
 
-# html = PyDocX.to_html('D:/Users/Desktop/工作文档/共享文档/webmin_doc/ViFi_DEV16_WEBMIN_001_2015-12-19.docx')
+html = PyDocX.to_html('D:/Users/Desktop/工作文档/共享文档/webmin_doc/ViFi_DEV16_WEBMIN_001_2015-12-19.docx')
 # html = PyDocX.to_html('D:/test.docx')
 html = CommonUtils.read_text("test.html")
 
