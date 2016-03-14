@@ -2,6 +2,7 @@ import collections
 import json
 import re
 import unittest
+import time
 
 import execjs
 
@@ -102,14 +103,14 @@ class MaintainPage(AddPage):
 
         CommonUtils.write_text(self.js_file, js_value)
 
-    # 维护所有实体!!!
+    # 生成所有实体!!!
     @staticmethod
-    def mt_all_entity():
+    def generate_all_entity():
         [AddPage(tb_name).add_java_entity() for tb_name in AddPage.get_all_webmin_tb()]
 
     # 维护指定实体!!!
     @staticmethod
-    def mt_entity(tb_names):
+    def generate_entity(tb_names):
         [AddPage(tb_name).add_java_entity() for tb_name in tb_names]
 
 
@@ -125,12 +126,15 @@ class TestMaintainMain(unittest.TestCase):
         self.test_mt_list_js()
 
     def test_mt_entity(self):
-        tb_names = ["tbCDR"]
-        MaintainPage.mt_entity(tb_names)
+        tb_names = ["tbVersion"]
+        MaintainPage.generate_entity(tb_names)
 
     def test_mt_all_entity(self):
-        MaintainPage.mt_all_entity()
+        MaintainPage.generate_all_entity()
 
+
+    def test_123(self):
+        print( time.localtime() )
 
 
     # *** 维护多个表字段js设置

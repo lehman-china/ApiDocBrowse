@@ -9,39 +9,36 @@ def str2var(string,sign = '"'):
 
 
 def var2str(string,sign = '"'):
-    result = CommonUtils.reg_sub_ex(' '+sign+'|\s{0,}'+sign+'\s\+', lambda p, c: "", string)
+    result = CommonUtils.reg_sub_ex(' %s|%s\n|\s{0,}%s\s\+' % (sign,sign,sign), lambda p, c: "", string)
     CommonUtils.clip(result)
 
 
 string = """
 
-
-'<label class="control-label" ng-class="{\'col-sm-4\':viewCfg.isSplit,\'col-sm-3\':!viewCfg.isSplit}" >{{vc.title || vc.name }}:</label>' +
-        '<div class="col-sm-8">' +
-        '  <div ng-if="!form.isMultiEdit" ng-switch="vc.comType">' +
-        '    <div ng-switch-when="select" class="form-control input-sm" style="padding:0;border:0">' +
-        '          <div ng-my-select="form.copyData[vc.name],vc.comData,vc.name,isDisabledEdit(vc),vc.help||vc.title||vc.name"></div>' +
-        '    </div>' +
-        '    <div ng-switch-when="radio" class="input-sm " style="padding:0;border:0" ' +
-        '           ng-my-radio="form.copyData[vc.name],vc.comData,vc.name,isDisabledEdit(vc)">' +
-        '    </div>' +
-        '    <div ng-switch-when="checkbox" class="input-sm " style="padding:0;border:0"' +
-        '          ng-my-checkbox="form.copyData[vc.name],vc.comData,vc.name,isDisabledEdit(vc),vc.help||vc.title||vc.name">' +
-        '    </div>' +
-        '    <div ng-switch-when="area" class="input-sm " style="padding:0;border:0"' +
-        '          ng-my-area="form.copyData[vc.name],vc.comData,vc.name,isDisabledEdit(vc),vc.help||vc.title||vc.name">' +
-        '    </div>' +
-        '    <input ng-switch-default class="form-control input-sm" type="text" name="{{vc.name}}" placeholder="{{vc.help || vc.title || vc.name}}"' +
-        '           ng-click="vc.type==\'D\'&&laydate(form.copyData,vc.name)"' +
-        '           ng-disabled="isDisabledEdit(vc)" ng-model="form.copyData[vc.name]" >' +
-        '  </div>' +
-        '   <ng-smarty-input ng-if="form.isMultiEdit && vc.mulEdit"/>' +
-        '</div>'
-
+"select \n" +
+                "\tcontinent,areaCode,`name` areaName,\n" +
+                "\tconcat('[',GROUP_CONCAT(CAST(concat('{\"status\":',STATUS,',\"count\":',statusCount,\"}\") AS char) order by STATUS ),']') statusCount ,\n" +
+                "\tsum(statusCount) statusSum\n" +
+                "from\n" +
+                "(\n" +
+                "\tSELECT\n" +
+                "\t\ttbArea.continent continent,\n" +
+                "\t\ttbArea.`name`,\n" +
+                "\t\ttbSCGroup.areaCode AS areaCode,\n" +
+                "\t\ttbSimCard.`status` AS `status`,\n" +
+                "\t\tCount(tbSimCard.`status`) AS statusCount\n" +
+                "\tFROM\n" +
+                "\t\ttbSimCard\n" +
+                "\t\tINNER JOIN tbSCGroup ON tbSimCard.idxSCGroupID = tbSCGroup.keySCGroupID\n" +
+                "\t\tINNER JOIN tbArea ON tbSCGroup.areaCode = tbArea.keyAreaCode\n" +
+                "\t\tGROUP BY tbSCGroup.areaCode,tbSimCard.status\n" +
+                ") areaStatusCount group by areaCode"
 
 
 
 """
 
 # str2var(string,"'")
-var2str(string,"'")
+# var2str(string)
+print(123)
+

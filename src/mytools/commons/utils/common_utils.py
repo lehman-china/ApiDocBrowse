@@ -20,7 +20,6 @@ class CommonUtils:
             # 取得子匹配
             def child_ma(inx):
                 return param.string[param.regs[inx][0]:param.regs[inx][1]]
-
             # 替换的内容
             return callback(param, child_ma)
 

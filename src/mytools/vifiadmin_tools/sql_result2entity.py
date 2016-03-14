@@ -6,22 +6,26 @@ from src.commons.utils.mysql_utils import init_db, query
 from src.mytools.commons.utils.common_utils import CommonUtils
 
 init_db('192.168.1.215', 'root', 'myvifi', 'UUWIFI')
-entity_name = "testVO"
+entity_name = "TestVO"
 SQL = """
-SELECT
-  tbSimPPort.idxSimPDevID,
-  tbSimPPort.idxSlotNum,
-  tbSimPPort.`status`,
-  tbSimCard.idxSCGroupID,
-  tbSimCard.`status` AS cStatus,
-  tbSimCard.number cNumber,
-  tbSimCard.balance / 1000 cBalance,
-  tbViFiDevice.devState vStatus,
-  tbViFiDevice.cos vCos
-FROM
-  tbSimPPort
-  LEFT JOIN tbSimCard ON tbSimPPort.idxIccid = tbSimCard.idxIccid
-  LEFT JOIN tbViFiDevice ON tbSimPPort.idxViFiId = tbViFiDevice.idxViFiID where idxSimPDevID=1
+select
+	continent,areaCode,`name` areaName,
+	concat('{',GROUP_CONCAT(CAST(concat('"status":',STATUS,',"count":',statusCount) AS char) order by STATUS ),'}') statusCount ,
+	sum(statusCount) statusSum
+from
+(
+	SELECT
+		tbArea.continent continent,
+		tbArea.`name`,
+		tbSCGroup.areaCode AS areaCode,
+		tbSimCard.`status` AS `status`,
+		Count(tbSimCard.`status`) AS statusCount
+	FROM
+		tbSimCard
+		INNER JOIN tbSCGroup ON tbSimCard.idxSCGroupID = tbSCGroup.keySCGroupID
+		INNER JOIN tbArea ON tbSCGroup.areaCode = tbArea.keyAreaCode
+		GROUP BY tbSCGroup.areaCode,tbSimCard.status
+) areaStatusCount group by areaCode
 
 
 
@@ -74,7 +78,7 @@ def sql_result2javabean(datas):
         ${jf_map_name}
         public ${jf_type} get${val_def}() {return ${key};}
         ${jf_map_name}
-        public void set${val_def}( ${jf_type} $key} ) {this.${key} = ${key};}
+        public void set${val_def}( ${jf_type} ${key} ) {this.${key} = ${key};}
     % end
 
     }
