@@ -5,30 +5,16 @@ from lib.bottle import template
 from src.commons.utils.mysql_utils import init_db, query
 from src.mytools.commons.utils.common_utils import CommonUtils
 
-init_db('192.168.1.215', 'root', 'myvifi', 'UUWIFI')
+init_db('192.168.1.201', 'dev', 'dev', 'job')
 entity_name = "TestVO"
 SQL = """
-select
-	continent,areaCode,`name` areaName,
-	concat('{',GROUP_CONCAT(CAST(concat('"status":',STATUS,',"count":',statusCount) AS char) order by STATUS ),'}') statusCount ,
-	sum(statusCount) statusSum
-from
-(
-	SELECT
-		tbArea.continent continent,
-		tbArea.`name`,
-		tbSCGroup.areaCode AS areaCode,
-		tbSimCard.`status` AS `status`,
-		Count(tbSimCard.`status`) AS statusCount
-	FROM
-		tbSimCard
-		INNER JOIN tbSCGroup ON tbSimCard.idxSCGroupID = tbSCGroup.keySCGroupID
-		INNER JOIN tbArea ON tbSCGroup.areaCode = tbArea.keyAreaCode
-		GROUP BY tbSCGroup.areaCode,tbSimCard.status
-) areaStatusCount group by areaCode
-
-
-
+SELECT
+g.`name`,
+m.rec_num,
+m.give_num,
+m.last_give_to_user,
+m.last_rec_from_user
+from t_my_gift m join t_product_gift g on m.product_gift_id=g.product_gift_id
 
 """
 

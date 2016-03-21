@@ -1,0 +1,39 @@
+{
+  "module": "deal",
+  "moduleName": "订单",
+  "explain": "订单相关",
+  "apiList": [
+    {
+      "name": "获取礼物列表",
+      "url": "/deal/getgiftlist",
+      "type": "GET",
+      "contentType": "text/plain;charset=UTF-8",
+      "param": {
+      },
+      "result": {
+        "errorCode": "type=long& explain=状态码,0表示成功",
+        "errMsg": "type=String& explain=消息",
+        "sysTime": "type=long& explain=系统时间戳",
+        "giftList": [
+          {
+            "giftId": "type=long& explain=礼物ID",
+            "giftName": "type=String& explain=礼物名称",
+            "price": "type=long& explain=礼物售价（单位 1觅豆）",
+            "pic": "type=String& explain=礼物图片url",
+            "introduction": "type=String& explain=礼物介绍",
+            "categoryIds": "type=String& explain=礼物分类归属  同一礼物可归属多个分类  用,隔开  Ex：1,2",
+            "sort": "type=Integer& explain=礼物排序依据。数值越小越靠前"
+          }
+        ],
+        "giftCategoryList": [
+          {
+            "giftCategoryId": "type=long& explain=礼物分类ID",
+            "giftCategoryName": "type=String& explain=礼物分类名称",
+            "eachGiftWidth": "type=long& explain=每个礼物的宽度",
+            "eachGiftHeight": "type=long& explain=每个礼物的高度"
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -34,12 +34,16 @@ require(["layer", "angular", "commonUtil", "bootstrap"], function (layer) {
     });
 
     app.controller("apiCtrl", function ($scope, $interval) {
-        var DOMAN_LS_KEY = "DOMAN_LS_KEY"
+        var DOMAN_LS_KEY = "DOMAN_LS_KEY";
         $scope.view = g_view;
         $scope.form = {}; // 一些提交的数据分类
         // 域名
         $scope.domain = localStorage.getItem(DOMAN_LS_KEY) || "http://192.168.1.100:8080";
-        $scope.domainList = ["http://192.168.1.100:8080", "http://www.myymjk.com/", "http://test.cyyz-health.com/", "http://www.tsymjk.com/"];
+        $scope.domainList = [
+            // 新网缘
+            "http://192.168.1.201:8082/job",
+            "http://192.168.1.173:8080"
+        ];
 
         $scope.$watch("domain", function (nData) {
             localStorage.setItem(DOMAN_LS_KEY, nData);
@@ -48,10 +52,13 @@ require(["layer", "angular", "commonUtil", "bootstrap"], function (layer) {
         // 请求头的展示,与数据同步
         $scope.getRequestHeaders = function () {
             var requestHeaders = {
-                'Content-Type': $scope.form.contentType,
+                'Content-Type': $scope.form.contentType
                 // 当前取, 或 sessionStorage中取
-                'Cookie': $scope.form.Cookie || sessionStorage["simuLoginCookie"]
+                //'Cookie': $scope.form.Cookie || sessionStorage["simuLoginInfo"]
+                //'Cookie': "app_name=forums; device_id=2521fcfd8c85892e86c12f6fa425d8b924129cab; device_os=iOS; device_osversion=7.1.1; device_type=iPhone 5s; q_version=1.3.0226; sessionToken=a8d18c60956cdaf235a27fceded352b7; userId=1900489"
             };
+
+
             return $scope.view.apiTest.headers = requestHeaders;
         };
 
@@ -110,13 +117,63 @@ require(["layer", "angular", "commonUtil", "bootstrap"], function (layer) {
             result: ""
         };
 
+        // 接口签名计算
+        function getSignCalc(param) {
+            param["app_name"] = "forums";
+            param["device_id"] = "2521fcfd8c85892e86c12f6fa425d8b924129cab";
+            param["device_os"] = "iOS";
+            param["device_osversion"] = "7.1.1";
+            param["device_type"] = "iPhone 5s";
+            param["q_version"] = "1.3.0226";
+            param["req_timestamp"] = +new Date();
+
+            //**** 读取从服务器获得统一登陆信息 begin
+            var loginUserRes = Util.syncAjax({
+                url: "/get_login_user_resp.ajax",
+                data: {
+                    param: JSON.stringify($scope.view.apiTest)
+                }
+            });
+            var user = loginUserRes.user;
+            param["userId"] = user.userId;
+            param["sessionToken"] = loginUserRes.sessionToken;
+
+            sessionStorage["simuLoginUser"] = $scope.view.simuLoginUser = user.userName = "登录成功!!! \n acount : " + user.mobileNumber +
+                            " ;\n userId : " + param["userId"] + " ;\n sessionToken : " + param["sessionToken"];
+            //**** 读取从服务器获得统一登陆信息 end
+
+
+
+            var signSalt = "ffwefq#%wef23541235";
+            var keys = _.sortBy(Object.keys(param));
+            var sign = signSalt;
+            for (var i = 0; i < keys.length; i++) {
+                var key = keys[i];
+                if ("sign" !== key && !/file_/.test(key)) {
+                    sign += key + param[key];
+                }
+            }
+            sign += signSalt;
+
+            param["sign"] = Util.toMD5(sign).toUpperCase();
+            return param;
+        }
+
         $scope.testApi = function () {
             var param = $(".api-param-show").val();
             try {
-                param = $scope.view.apiTest.param = JSON.parse(param);
+                param = JSON.parse(param);
             } catch (e) {
                 return alert(e + "参数需是JSON格式");
             }
+
+
+            //****************** 签名算法
+            $scope.view.apiTest.param = getSignCalc(param);
+
+
+            delete $scope.view.apiTest.result;
+
             var apiTestTime = new Date();
             Util.ajax({
                 url: "/testApi.ajax",
@@ -141,8 +198,8 @@ require(["layer", "angular", "commonUtil", "bootstrap"], function (layer) {
         };
         //endregion
         //region ****************************模拟APP登录*****************************
-        $scope.form.simuAccount = "13266720440";
-        $scope.form.simuPassword = "hello123";
+        $scope.form.simuAccount = "18566767959";
+        $scope.form.simuPassword = "1101";
         var loginInx = null;
         $scope.view.simuLoginUser = sessionStorage["simuLoginUser"];
         function initSimulateLogin() {
@@ -159,18 +216,22 @@ require(["layer", "angular", "commonUtil", "bootstrap"], function (layer) {
             });
         }
 
-        // 模拟登录,把Cookie = 放入 $scope.form.Cookie
+        // 模拟登录,加入登陆信息
         $scope.simuLogin = function () {
             var param = {
-                url: $scope.domain + "/api/login",
+                url: $scope.domain + "/user/loginbyauthcode",
                 headers: {"Content-Type": "text/plain;charset=UTF-8"},
-                type: "POST",
-                contentType: "text/plain",
+                type: "GET",
+                contentType: "application/json;charset=UTF-8",
                 param: {
-                    "username": $scope.form.simuAccount,
-                    "password": Util.toMD5($scope.form.simuPassword),
-                    "clientId": "API_TEST_CLIENT_ID",
-                    "promoteChannelKey": "API_TEST_PROMOTE_CHANNEL"
+                    "device_os": "iOS",
+                    "device_osversion": "7.1.1",
+                    "device_type": "iPhone 5s",
+                    "q_version": "1.3.0226",
+                    "req_timestamp": +new Date(),
+                    "phoneNumber": $scope.form.simuAccount,
+                    "authCode": $scope.form.simuPassword,
+                    "device_id": "2521fcfd8c85892e86c12f6fa425d8b924129cab"
                 }
             };
             param = JSON.stringify(param);
@@ -181,10 +242,11 @@ require(["layer", "angular", "commonUtil", "bootstrap"], function (layer) {
                 },
                 success: function (res) {
                     try {
-                        var res = JSON.parse(res.content).data;
+                        var res = JSON.parse(res.content);
+                        var user = res.user;
                         sessionStorage["simuLoginUser"] = $scope.view.simuLoginUser = "登录成功!!! \n acount : " + $scope.form.simuAccount +
-                            " ;\n userId : " + res.userId + " ;\n JSESSIONID : " + res.jsessionId + " ; TOKEN : " + res.token;
-                        sessionStorage["simuLoginCookie"] = $scope.form.Cookie = "JSESSIONID=" + res.jsessionId + "; TOKEN=" + res.token;
+                            " ;\n userId : " + user.userId + " ;\n sessionToken : " + res.sessionToken;
+                        sessionStorage["simuLoginInfo"] = JSON.stringify({userId: user.userId, sessionToken: res.sessionToken});
                         $scope.$apply();
                         layer.close(loginInx);
                     } catch (e) {

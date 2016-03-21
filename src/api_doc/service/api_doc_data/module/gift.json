@@ -1,0 +1,66 @@
+{
+  "module": "gift",
+  "moduleName": "礼物相关",
+  "explain": "礼物相关",
+  "apiList": [
+    {
+      "name": "获取礼物列表",
+      "url": "/gift/getgiftlist",
+      "type": "GET",
+      "contentType": "text/plain;charset=UTF-8",
+      "param": {
+      },
+      "result": {
+        "errorCode": "type=long& explain=状态码,0表示成功",
+        "errMsg": "type=String& explain=消息",
+        "sysTime": "type=long& explain=系统时间戳",
+        "giftCategoryList": [
+          {
+            "$explain": "礼物分类列表",
+            "giftCategoryId": "type=String& explain=礼物分类ID",
+            "giftCategoryName": "type=Integer& explain=礼物分类名称",
+            "eachGiftWidth": "type=Integer& explain=每个礼物的宽度",
+            "eachGiftHeight": "type=String& explain=每个礼物的高度"
+          }
+        ],"giftList": [
+          {
+            "$explain": "礼物列表",
+            "giftId": "type=String& explain=礼物ID",
+            "giftName": "type=Integer& explain=礼物名称",
+            "price": "type=Integer& explain=礼物售价（单位 1觅豆）",
+            "pic": "type=String& explain=礼物图片url",
+            "introduction": "type=String& explain=礼物介绍",
+            "categoryIds": "type=String& explain=礼物分类归属  同一礼物可归属多个分类  用,隔开  Ex：1,2",
+            "sort": "type=String& explain=礼物排序依据。数值越小越靠前"
+          }
+        ]
+      }
+    },
+    {
+      "name": "获取我的礼物列表",
+      "explain": "收到的礼物,赠送的礼物",
+      "url": "/gift/my-gift",
+      "type": "GET",
+      "contentType": "text/plain;charset=UTF-8",
+      "param": {
+      },
+      "result": {
+        "errorCode": "type=long& explain=状态码,0表示成功",
+        "errMsg": "type=String& explain=消息",
+        "sysTime": "type=long& explain=系统时间戳",
+        "recSum": "type=Integer& explain=收到的总数",
+        "giveSum": "type=Integer& explain=赠送的总数",
+        "myGiftList": [
+          {
+            "$explain": "我的礼物列表",
+            "giftName": "type=String& explain=礼物名称",
+            "recNum": "type=Integer& explain=收到的数量",
+            "giveNum": "type=Integer& explain=赠送的数量",
+            "lastGiveToUser": "type=String& explain=最后赠送给此礼物给用户",
+            "lastRecFromUser": "type=String& explain=最后收到来自此用户的礼物"
+          }
+        ]
+      }
+    }
+  ]
+}

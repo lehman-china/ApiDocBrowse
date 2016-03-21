@@ -1,0 +1,22 @@
+{
+  "module": "h5",
+  "moduleName": "app嵌套html5页面的说明",
+  "explain": "app嵌套html5页面的说明",
+  "apiList": [
+    {
+      "name": "收到的礼物列表",
+      "url": "/gift/my-receive-list",
+      "type": "GET",
+      "contentType": "text/html;charset=UTF-8",
+      "param": {},
+      "result": {}
+    },{
+      "name": "送出的礼物列表",
+      "url": "/gift/my-give-list",
+      "type": "GET",
+      "contentType": "text/html;charset=UTF-8",
+      "param": {},
+      "result": {}
+    }
+  ]
+}

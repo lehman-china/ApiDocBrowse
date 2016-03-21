@@ -9,7 +9,8 @@ from lib.bottle import template, request
 from src import app
 
 import json
-import http
+
+
 
 # 首页
 @app.route( '/', method = 'GET' )
@@ -33,9 +34,14 @@ def intoApi( ):
 def intoApiDocCenter( ):
     return template( 'api_doc_browse/api_doc_center.html' )
 
+login_user_resp = {"user":{"userId":"1900489"},"sessionToken":"e47d26d1d168da20a6a2d5b4903540dc"}
+@app.route( '/get_login_user_resp.ajax', method = 'POST' )
+def get_login_user_resp( ):
+    return json.dumps( login_user_resp )
 
 @app.route( '/testApi.ajax', method = 'POST' )
 def testApiPOST( ):
+    global login_user_resp
     param = json.loads( request.params.param )
     options = {
         "url": param["url"],
@@ -44,6 +50,13 @@ def testApiPOST( ):
         "param": param["param"]
     }
     res = httpRequest( options )
+    if options["url"].find("loginbyauthcode") > -1:
+        print( "登陆接口~保存登陆信息" )
+        res_dict = json.loads( res )
+        if res_dict["errorCode"] == 0:
+            login_user_resp = res_dict
+            print( json.dumps(login_user_resp))
+
     return json.dumps( { "content": res } )
 
 
